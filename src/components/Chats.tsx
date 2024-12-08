@@ -1,6 +1,6 @@
 import { FiPlusCircle } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
-import williamLee from "/assets/william_lee.jpg";
+
 import userChats from "../../userChats.json";
 import { useState } from "react";
 import { UserChats } from "../types/types";
@@ -9,7 +9,7 @@ const Chats = () => {
   const [data, setData] = useState<UserChats[]>(userChats);
 
   return (
-    <div className="bg-[#1E2126] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
+    <div className="bg-[#1E2126] tracking-[-0.1px] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
       <div className="flex items-center justify-between">
         <h2 className=" font-semibold text-2xl text-white">Chats</h2>
         <FiPlusCircle size={24} color="#ffffff" />
@@ -29,9 +29,12 @@ const Chats = () => {
         </div>
       </form>
 
-      {data.map((userChat) => (
-        <div className="flex items-center justify-between">
-          <div className="flex justify-center  items-center gap-4">
+      {data.map((userChat, index) => (
+        <div
+          key={index}
+          className="flex cursor-pointer items-center justify-between"
+        >
+          <div className="flex justify-center items-center gap-4">
             <img
               src={userChat.image}
               alt="profile-img"
@@ -40,7 +43,7 @@ const Chats = () => {
 
             <div className="flex flex-col gap-2">
               <h4 className="text-base font-medium text-left text-[#E2E2E2]">
-                {userChat.firstname}
+                {userChat.firstname}&nbsp;
                 {userChat.lastname}
               </h4>
               <p className="text-[#A4A2A2] text-xs">{userChat.lastMessage}</p>
