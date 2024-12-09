@@ -3,7 +3,8 @@ import { GoHomeFill } from "react-icons/go";
 import { BsChatText } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
-import profilePic from "/assets/profile.png";
+
+import { UserButton } from "@clerk/clerk-react";
 
 const Sidebar = () => {
   return (
@@ -23,7 +24,7 @@ const Sidebar = () => {
         </div>
 
         <figure>
-          <img src={profilePic} alt="profile-pic" />
+          <UserButton />
         </figure>
       </div>
     </aside>
