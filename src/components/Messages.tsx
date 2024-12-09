@@ -1,7 +1,19 @@
+import { useQuery } from "convex/react";
 import MessageInput from "./MessageInput";
 import receiverImg from "/assets/john_doe.jpg";
+import { api } from "../../convex/_generated/api";
+import { useParams } from "react-router-dom";
 
 const Messages = () => {
+  const { id: conversationKey } = useParams();
+
+  if (!conversationKey) {
+    return;
+  }
+  const messages = useQuery(api.messages.getMessages, { conversationKey });
+
+  console.log;
+
   return (
     <main className="px-6 relative mt-6">
       <div className="flex flex-col justify-center">

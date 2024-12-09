@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const message = mutation({
   args: {
@@ -13,7 +13,22 @@ export const message = mutation({
       senderId: args.senderId,
       receiverId: args.receiverId,
       conversationKey: args.conversationKey,
-      message:args.message
+      message: args.message,
     });
+  },
+});
+
+export const getMessages = query({
+  args: { conversationKey: v.string() },
+  handler: async (ctx, args) => {
+    const messages = await ctx.db
+      .query("messages")
+      .withIndex("by_conversationKey", (q) =>
+        q.eq("conversationKey", args.conversationKey)
+      )
+      .order("desc")
+      .take(100);
+
+    return messages.reverse();
   },
 });
