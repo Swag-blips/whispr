@@ -32,7 +32,14 @@ export const store = mutation({
 export const users = query({
   args: {},
   handler: async (ctx) => {
-    const users = await ctx.db.query("users").order("desc").take(100);
+    const identity = await ctx.auth.getUserIdentity();
+    const users = await ctx.db
+      .query("users")
+      .filter((q) =>
+        q.neq(q.field("tokenIdentifier"), identity?.tokenIdentifier)
+      )
+      .order("desc")
+      .take(100);
 
     return users;
   },
