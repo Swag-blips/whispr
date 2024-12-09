@@ -32,7 +32,6 @@ const Messages = () => {
         </div>
       </div>
 
-
       <MessageInput />
     </main>
   );

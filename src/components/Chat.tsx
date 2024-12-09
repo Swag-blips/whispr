@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 
