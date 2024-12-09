@@ -1,7 +1,7 @@
 export default {
   providers: [
     {
-      domain: "https://qualified-cat-834.convex.cloud/",
+      domain: "https://gorgeous-cougar-41.clerk.accounts.dev/",
       applicationID: "convex",
     },
   ],
