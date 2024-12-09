@@ -1,12 +1,19 @@
-import Chats from "../components/Chats";
+import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import Chat from "../components/Chat";
+import Chats from "../components/Chats";
 import useUserStoreEffect from "../components/useUserStoreEffect";
 import { LuLoader } from "react-icons/lu";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const RootLayout = () => {
   const { isLoading, isAuthenticated } = useUserStoreEffect();
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate("/sign-in");
+    }
+  }, [isAuthenticated]);
   if (isLoading) {
     return (
       <div className="flex items-center h-screen justify-center">
@@ -18,9 +25,9 @@ const Home = () => {
     <div className="flex">
       <Sidebar />
       <Chats />
-      <Chat />
+      <Outlet />
     </div>
   );
 };
 
-export default Home;
+export default RootLayout;

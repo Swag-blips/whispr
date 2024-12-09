@@ -1,13 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
+import RootLayout from "./layout/RootLayout";
+import SelectChat from "./components/SelectChat";
+import Chat from "./components/Chat";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />,
+      element: <RootLayout />,
+      children: [
+        {
+          path: "/",
+          element: <SelectChat />,
+        },
+        {
+          path: "/chat/:id",
+          element: <Chat />,
+        },
+      ],
     },
     {
       path: "/sign-in",
