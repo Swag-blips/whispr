@@ -1,12 +1,12 @@
 import { FiPlusCircle } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
-
-import userChats from "../../userChats.json";
-import { useState } from "react";
-import { UserChats } from "../types/types";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const Chats = () => {
-  const [data, setData] = useState<UserChats[]>(userChats);
+  const users = useQuery(api.users.users);
+
+  console.log(users);
 
   return (
     <div className="bg-[#1E2126] tracking-[-0.1px] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
@@ -29,30 +29,27 @@ const Chats = () => {
         </div>
       </form>
 
-      {data.map((userChat, index) => (
+      {users?.map((user, index) => (
         <div
           key={index}
           className="flex cursor-pointer items-center justify-between"
         >
           <div className="flex justify-center items-center gap-4">
             <img
-              src={userChat.image}
+              src={user.photoUrl}
               alt="profile-img"
               className=" h-12 w-12 rounded-full object-cover"
             />
 
             <div className="flex flex-col gap-2">
               <h4 className="text-base font-medium text-left text-[#E2E2E2]">
-                {userChat.firstname}&nbsp;
-                {userChat.lastname}
+                {user.name}
               </h4>
-              <p className="text-[#A4A2A2] text-xs">{userChat.lastMessage}</p>
+              <p className="text-[#A4A2A2] text-xs">Hello there!</p>
             </div>
           </div>
 
-          <p className="text-xs text-[#8C8A8A] ">
-            {userChat.timeOfLastMessage}
-          </p>
+          <p className="text-xs text-[#8C8A8A] ">12:40</p>
         </div>
       ))}
     </div>

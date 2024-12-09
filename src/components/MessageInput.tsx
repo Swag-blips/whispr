@@ -15,7 +15,7 @@ const MessageInput = () => {
         <div className="absolute right-[15%] top-3 flex justify-center items-center gap-4">
           <CiFaceSmile size={24} color="#ffffff" className="" />
           <div className="bg-white px-[10px] py-[4px] rounded-lg">
-            <LuSend size={24} color="#000000" />
+            <LuSend size={16} color="#000000" />
           </div>
         </div>
       </div>

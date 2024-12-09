@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 export const store = mutation({
   args: {},
@@ -26,5 +26,14 @@ export const store = mutation({
       name: identity.name ?? "Anonymous",
       tokenIdentifier: identity.tokenIdentifier,
     });
+  },
+});
+
+export const users = query({
+  args: {},
+  handler: async (ctx) => {
+    const users = await ctx.db.query("users").order("desc").take(100);
+
+    return users;
   },
 });
