@@ -4,16 +4,14 @@ export const store = mutation({
   args: {},
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
-    console.log(identity);
+
     if (!identity) {
       throw new Error("Called storeUser without authentication present");
     }
 
     const user = await ctx.db
       .query("users")
-      .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier)
-      )
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
       .unique();
     if (user !== null) {
       if (user.name !== identity.name) {
@@ -23,6 +21,8 @@ export const store = mutation({
     }
 
     return await ctx.db.insert("users", {
+      userId: identity.subject,
+      photoUrl: identity.pictureUrl ?? "Anonymous",
       name: identity.name ?? "Anonymous",
       tokenIdentifier: identity.tokenIdentifier,
     });
