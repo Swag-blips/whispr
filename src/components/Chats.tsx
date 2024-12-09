@@ -2,11 +2,13 @@ import { FiPlusCircle } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Link } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 
 const Chats = () => {
   const users = useQuery(api.users.users);
 
-  console.log(users);
+  const { userId } = useAuth();
 
   return (
     <div className="bg-[#1E2126] tracking-[-0.1px] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
@@ -30,27 +32,29 @@ const Chats = () => {
       </form>
 
       {users?.map((user, index) => (
-        <div
+        <Link
           key={index}
-          className="flex cursor-pointer items-center justify-between"
+          to={`/chat/${[userId, user.userId].sort().join("")}`}
         >
-          <div className="flex justify-center items-center gap-4">
-            <img
-              src={user.photoUrl}
-              alt="profile-img"
-              className=" h-12 w-12 rounded-full object-cover"
-            />
+          <div className="flex cursor-pointer items-center justify-between">
+            <div className="flex justify-center items-center gap-4">
+              <img
+                src={user.photoUrl}
+                alt="profile-img"
+                className=" h-12 w-12 rounded-full object-cover"
+              />
 
-            <div className="flex flex-col gap-2">
-              <h4 className="text-base font-medium text-left text-[#E2E2E2]">
-                {user.name}
-              </h4>
-              <p className="text-[#A4A2A2] text-xs">Hello there!</p>
+              <div className="flex flex-col gap-2">
+                <h4 className="text-base font-medium text-left text-[#E2E2E2]">
+                  {user.name}
+                </h4>
+                <p className="text-[#A4A2A2] text-xs">Hello there!</p>
+              </div>
             </div>
-          </div>
 
-          <p className="text-xs text-[#8C8A8A] ">12:40</p>
-        </div>
+            <p className="text-xs text-[#8C8A8A] ">12:40</p>
+          </div>
+        </Link>
       ))}
     </div>
   );
