@@ -1,30 +1,54 @@
 import { useQuery } from "convex/react";
 import MessageInput from "./MessageInput";
-import receiverImg from "/assets/john_doe.jpg";
 import { api } from "../../convex/_generated/api";
 import { useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import useChatStore from "../store/useChatStore";
 
 const Messages = () => {
+  const [receiverId, setReceiverId] = useState("");
   const { id: conversationKey } = useParams();
 
   if (!conversationKey) {
     return;
   }
-  const messages = useQuery(api.messages.getMessages, { conversationKey });
+  const messages = useQuery(api.messages.getMessages, {
+    conversationKey,
+    receiverId,
+  });
   const { userId } = useAuth();
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
+  const { loading, setLoading, setChat } = useChatStore();
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (messages) {
+      setChat(messages);
+    }
 
-  useEffect(() => {}, [messages]);
+    scrollToBottom();
+  }, [messages, loading]);
+
+  useEffect(() => {
+    const user1Id = conversationKey?.substring(0, 32);
+    const user2Id = conversationKey?.substring(32, 64);
+    const usersArray = [user1Id, user2Id];
+
+    const receiver = usersArray
+      .filter((user) => {
+        return user !== userId;
+      })
+      .join("");
+    setReceiverId(receiver);
+  }, [conversationKey]);
+
+  useEffect(() => {
+    setLoading();
+  }, [messages]);
   return (
     <>
       <main className="px-6 relative mt-6">
@@ -35,7 +59,7 @@ const Messages = () => {
                 className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === userId ? "justify-end" : ""}`}
               >
                 <img
-                  src={receiverImg}
+                  src={message.receiver?.photoUrl}
                   alt="profile-img"
                   className={`w-12 h-12 object-cover rounded-full ${message.senderId === userId ? "hidden" : ""}`}
                 />

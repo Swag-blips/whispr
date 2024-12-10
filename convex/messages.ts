@@ -19,8 +19,13 @@ export const message = mutation({
 });
 
 export const getMessages = query({
-  args: { conversationKey: v.string() },
+  args: { conversationKey: v.string(), receiverId: v.string() },
   handler: async (ctx, args) => {
+    const receiver = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("userId"), args.receiverId))
+      .unique();
+
     const messages = await ctx.db
       .query("messages")
       .withIndex("by_conversationKey", (q) =>
@@ -29,6 +34,13 @@ export const getMessages = query({
       .order("desc")
       .take(100);
 
-    return messages.reverse();
+    return Promise.all(
+      messages
+        .map(async (message) => ({
+          ...message,
+          receiver,
+        }))
+        .reverse()
+    );
   },
 });
