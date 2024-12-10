@@ -56,14 +56,14 @@ const MessageInput = () => {
         <input
           onChange={(e) => setMessage(e.target.value)}
           value={message}
-          className="w-[inherit] text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126] rounded-lg"
+          className=" w-[88%] text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126]"
           placeholder="Send a message..."
         />
         <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
-        <div className="absolute bg-[#1E2126]  right-0 pr-6 top-4">
+        <div className="absolute bg-[#1E2126] h-14  right-0 pr-6 bottom-0 flex items-center justify-center">
           <button
             type="submit"
-            className=" flex bg-[#1E2126] justify-center items-center gap-4"
+            className=" flex bg-[#1E2126]  justify-center items-center gap-4"
           >
             <CiFaceSmile size={24} color="#ffffff" className="" />
             <div className="bg-white px-[10px] py-[4px] rounded-lg">
