@@ -21,14 +21,12 @@ const Messages = () => {
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
-  const { loading, setLoading, setChat } = useChatStore();
+  const { chat, loading, setLoading, setChat } = useChatStore();
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(() => {
-    if (messages) {
-      setChat(messages);
-    }
+    setChat(messages);
 
     scrollToBottom();
   }, [messages, loading]);
@@ -47,8 +45,11 @@ const Messages = () => {
   }, [conversationKey]);
 
   useEffect(() => {
-    setLoading();
+    if (loading) {
+      setLoading();
+    }
   }, [messages]);
+
   return (
     <>
       <main className="px-6 relative mt-6">

@@ -16,7 +16,9 @@ const ChatHeader = () => {
             className="w-12 object-cover h-12 rounded-full"
           />
           <div className="flex flex-col gap-2 items-start">
-            <h4 className="font-medium text-white text-base">John Doe</h4>
+            <h4 className="font-medium text-white text-base">
+              {!loading && chat ? chat[0].receiver?.name : "Anonymous"}
+            </h4>
             <p className="text-xs text-[#A4A2A2] font-medium">online</p>
           </div>
         </div>
