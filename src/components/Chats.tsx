@@ -11,7 +11,7 @@ const Chats = () => {
   const { userId } = useAuth();
 
   return (
-    <div className="bg-[#1E2126] tracking-[-0.1px] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
+    <div className="bg-[#1E2126] sticky  right-0 left-0 top-0 bottom-0   tracking-[-0.1px] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
       <div className="flex items-center justify-between">
         <h2 className=" font-semibold text-2xl text-white">Chats</h2>
         <FiPlusCircle size={24} color="#ffffff" />
@@ -32,10 +32,7 @@ const Chats = () => {
       </form>
 
       {users?.map((user, index) => (
-        <Link
-          key={index}
-          to={`/chat/${[userId, user.userId].sort().join("")}`}
-        >
+        <Link key={index} to={`/chat/${[userId, user.userId].sort().join("")}`}>
           <div className="flex cursor-pointer items-center justify-between">
             <div className="flex justify-center items-center gap-4">
               <img

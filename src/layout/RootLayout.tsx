@@ -22,7 +22,7 @@ const RootLayout = () => {
     );
   }
   return (
-    <div className="flex">
+    <div className="relative flex items-start w-full">
       <Sidebar />
       <Chats />
       <Outlet />

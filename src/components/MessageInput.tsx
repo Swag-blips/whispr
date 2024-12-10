@@ -55,7 +55,7 @@ const MessageInput = () => {
         <input
           onChange={(e) => setMessage(e.target.value)}
           value={message}
-          className="w-[inherit] text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126] rounded-lg"
+          className="w-[inherit] text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126] rounded-lg"
           placeholder="Send a message..."
         />
         <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
