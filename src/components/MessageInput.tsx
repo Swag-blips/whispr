@@ -18,9 +18,10 @@ const MessageInput = () => {
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (!id || !userId) {
+      if (!id || !userId || !message) {
         return;
       }
+
       await sendMessage({
         message,
         senderId: userId,
@@ -49,9 +50,9 @@ const MessageInput = () => {
   return (
     <form
       onSubmit={handleSend}
-      className="fixed bg-[#16191C] bottom-0 mb-6 w-[86.5%] mr-[24px]"
+      className="sticky bottom-0 py-2 px-6 bg-[#16191c] z-10  w-full "
     >
-      <div className="w-[inherit] relative">
+      <div className=" w-full  relative">
         <input
           onChange={(e) => setMessage(e.target.value)}
           value={message}
@@ -59,16 +60,17 @@ const MessageInput = () => {
           placeholder="Send a message..."
         />
         <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
-
-        <button
-          type="submit"
-          className="absolute right-[15%] top-4 flex justify-center items-center gap-4"
-        >
-          <CiFaceSmile size={24} color="#ffffff" className="" />
-          <div className="bg-white px-[10px] py-[4px] rounded-lg">
-            <LuSend size={16} color="#000000" />
-          </div>
-        </button>
+        <div className="absolute bg-[#1E2126]  right-0 pr-6 top-4">
+          <button
+            type="submit"
+            className=" flex bg-[#1E2126] justify-center items-center gap-4"
+          >
+            <CiFaceSmile size={24} color="#ffffff" className="" />
+            <div className="bg-white px-[10px] py-[4px] rounded-lg">
+              <LuSend size={16} color="#000000" />
+            </div>
+          </button>
+        </div>
       </div>
     </form>
   );

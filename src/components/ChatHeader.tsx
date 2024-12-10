@@ -5,7 +5,7 @@ import { IoIosMore } from "react-icons/io";
 
 const ChatHeader = () => {
   return (
-    <header className="h-20 px-6 py-4">
+    <header className="h-20 px-6 py-4  sticky bg-[#16191c] z-20 top-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <img
