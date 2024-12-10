@@ -50,20 +50,23 @@ const MessageInput = () => {
   return (
     <form
       onSubmit={handleSend}
-      className="sticky bottom-0 py-2 px-6 bg-[#16191c] z-10  w-full "
+      className="fixed bottom-0 py-2 px-6 bg-[#16191c] z-10  w-full "
     >
-      <div className=" w-full  relative">
-        <input
-          onChange={(e) => setMessage(e.target.value)}
-          value={message}
-          className=" w-[88%] text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126]"
-          placeholder="Send a message..."
-        />
-        <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
-        <div className="absolute bg-[#1E2126] h-14  right-0 pr-6 bottom-0 flex items-center justify-center">
+      <div className=" flex items-center  w-[67%]">
+        <div className="relative w-full">
+          <input
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            className=" w-full text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126]"
+            placeholder="Send a message..."
+          />
+          <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
+        </div>
+
+        <div className=" bg-[#1E2126] h-14 right-2 pr-6 flex items-center justify-center">
           <button
             type="submit"
-            className=" flex bg-[#1E2126]  justify-center items-center gap-4"
+            className=" flex  justify-center items-center gap-4"
           >
             <CiFaceSmile size={24} color="#ffffff" className="" />
             <div className="bg-white px-[10px] py-[4px] rounded-lg">

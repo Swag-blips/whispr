@@ -32,7 +32,7 @@ const Messages = () => {
           {messages?.map((message) => (
             <>
               <div
-                className={`flex items-end gap-6 last:mb-5 ${message.senderId === userId ? "justify-end" : ""}`}
+                className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === userId ? "justify-end" : ""}`}
               >
                 <img
                   src={receiverImg}

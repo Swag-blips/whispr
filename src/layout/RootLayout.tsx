@@ -13,7 +13,7 @@ const RootLayout = () => {
     if (!isLoading && !isAuthenticated) {
       navigate("/sign-in");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading]);
   if (isLoading) {
     return (
       <div className="flex items-center h-screen justify-center">
