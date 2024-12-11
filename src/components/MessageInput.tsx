@@ -10,6 +10,7 @@ import { useAuth } from "@clerk/clerk-react";
 const MessageInput = () => {
   const [message, setMessage] = useState("");
   const [receiverId, setReceiverId] = useState("");
+  const [sending, setSending] = useState(false);
   const { id } = useParams();
 
   const sendMessage = useMutation(api.messages.message);
@@ -17,10 +18,16 @@ const MessageInput = () => {
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (sending) {
+      return;
+    }
     try {
       if (!id || !userId || !message) {
         return;
       }
+
+      setSending(true);
 
       await sendMessage({
         message,
@@ -28,10 +35,13 @@ const MessageInput = () => {
         conversationKey: id,
         receiverId,
       });
+
+      return;
     } catch (error) {
       console.log(error);
     } finally {
       setMessage("");
+      setSending(false);
     }
   };
 

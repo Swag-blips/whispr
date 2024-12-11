@@ -13,7 +13,7 @@ const Chats = () => {
 
   return (
     <div
-      className={`xl:bg-[#1E2126] bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
+      className={`xl:bg-[#1E2126]  bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
     >
       <div className="flex items-center justify-between">
         <h2 className=" font-semibold text-2xl text-white">Chats</h2>
@@ -24,7 +24,7 @@ const Chats = () => {
         <div className="relative">
           <input
             type="text"
-            className="w-full h-10 pl-12 placeholder-[#B6B6B6] rounded-lg bg-[#1E2126] xl:bg-[#16191C] text-white outline-none"
+            className="w-full h-10 pl-12 text-xs placeholder-[#B6B6B6] rounded-lg bg-[#1E2126] xl:bg-[#16191C] text-white outline-none"
             placeholder="Search"
           />
 

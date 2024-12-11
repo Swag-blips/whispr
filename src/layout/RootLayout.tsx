@@ -23,7 +23,7 @@ const RootLayout = () => {
     );
   }
   return (
-    <div className="relative flex-col xl:flex-row flex w-full">
+    <div className="relative tracking-[-0.4px] flex-col xl:flex-row flex w-full">
       <Navbar />
       <Sidebar />
       <Chats />

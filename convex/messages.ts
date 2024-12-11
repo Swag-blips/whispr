@@ -34,6 +34,8 @@ export const getMessages = query({
       .order("desc")
       .take(100);
 
+    
+
     return Promise.all(
       messages
         .map(async (message) => ({
