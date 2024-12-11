@@ -52,7 +52,7 @@ const MessageInput = () => {
       onSubmit={handleSend}
       className="fixed bottom-0 py-2 px-6 bg-[#16191c] z-10  w-full "
     >
-      <div className=" flex items-center  w-[67%]">
+      <div className=" flex items-center  xl:w-[67%]">
         <div className="relative w-full">
           <input
             onChange={(e) => setMessage(e.target.value)}

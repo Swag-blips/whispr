@@ -5,6 +5,7 @@ import useUserStoreEffect from "../components/useUserStoreEffect";
 import { LuLoader } from "react-icons/lu";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const RootLayout = () => {
   const { isLoading, isAuthenticated } = useUserStoreEffect();
@@ -22,7 +23,8 @@ const RootLayout = () => {
     );
   }
   return (
-    <div className="relative flex items-start w-full">
+    <div className="relative flex-col xl:flex-row flex w-full">
+      <Navbar />
       <Sidebar />
       <Chats />
       <Outlet />

@@ -2,16 +2,19 @@ import { FiPlusCircle } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 
 const Chats = () => {
   const users = useQuery(api.users.users);
 
   const { userId } = useAuth();
+  const { id } = useParams();
 
   return (
-    <div className="bg-[#1E2126] sticky  right-0 left-0 top-0 bottom-0   tracking-[-0.1px] w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8">
+    <div
+      className={`xl:bg-[#1E2126] bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
+    >
       <div className="flex items-center justify-between">
         <h2 className=" font-semibold text-2xl text-white">Chats</h2>
         <FiPlusCircle size={24} color="#ffffff" />
@@ -21,7 +24,7 @@ const Chats = () => {
         <div className="relative">
           <input
             type="text"
-            className="w-full h-10 pl-12 placeholder-[#B6B6B6] rounded-lg bg-[#16191C] text-white outline-none"
+            className="w-full h-10 pl-12 placeholder-[#B6B6B6] rounded-lg bg-[#1E2126] xl:bg-[#16191C] text-white outline-none"
             placeholder="Search"
           />
 
