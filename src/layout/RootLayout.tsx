@@ -6,10 +6,15 @@ import { LuLoader } from "react-icons/lu";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import useModalStore from "../store/useModalStore";
+import AddUserModal from "../components/AddUserModal";
+import Overlay from "../components/Overlay";
 
 const RootLayout = () => {
   const { isLoading, isAuthenticated } = useUserStoreEffect();
+  const { isOpen, setIsOpen } = useModalStore();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       navigate("/sign-in");
@@ -22,11 +27,27 @@ const RootLayout = () => {
       </div>
     );
   }
+
+  const handleIsOpen = () => {
+    console.log(isOpen);
+    if (!isOpen) {
+      setIsOpen();
+    }
+  };
   return (
     <div className="relative tracking-[-0.4px] flex-col xl:flex-row flex w-full">
       <Navbar />
       <Sidebar />
       <Chats />
+
+      {isOpen && (
+        <div>
+          <AddUserModal />
+          <div onClick={handleIsOpen}>
+            <Overlay />
+          </div>
+        </div>
+      )}
       <Outlet />
     </div>
   );
