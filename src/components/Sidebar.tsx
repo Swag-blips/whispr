@@ -8,7 +8,7 @@ import { UserButton } from "@clerk/clerk-react";
 
 const Sidebar = () => {
   return (
-    <aside className="bg-[#12171D] hidden xl:flex sticky right-0 left-0 top-0 bottom-0 py-6 justify-center w-[8.8888%] h-screen">
+    <aside className="bg-[#12171D]  hidden xl:flex sticky right-0 left-0 top-0 bottom-0 py-6 justify-center w-[8.8888%] h-screen">
       <div className="flex flex-col justify-between items-center">
         <div className="flex flex-col items-center gap-12">
           <figure>

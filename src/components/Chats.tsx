@@ -4,12 +4,10 @@ import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
-import { useState } from "react";
 
 import useModalStore from "../store/useModalStore";
 
 const Chats = () => {
-  const [openModal, setOpenModal] = useState(false);
   const users = useQuery(api.users.users);
   const { setIsOpen } = useModalStore();
   const { userId } = useAuth();
@@ -21,7 +19,7 @@ const Chats = () => {
 
   return (
     <div
-      className={`xl:bg-[#1E2126] relative bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
+      className={`xl:bg-[#1E2126]  relative bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
     >
       <div className="flex items-center justify-between">
         <h2 className=" font-semibold text-2xl text-white">Chats</h2>

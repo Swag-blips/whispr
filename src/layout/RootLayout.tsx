@@ -30,7 +30,7 @@ const RootLayout = () => {
 
   const handleIsOpen = () => {
     console.log(isOpen);
-    if (!isOpen) {
+    if (isOpen) {
       setIsOpen();
     }
   };
@@ -43,7 +43,7 @@ const RootLayout = () => {
       {isOpen && (
         <div>
           <AddUserModal />
-          <div onClick={handleIsOpen}>
+          <div className="pointer-events-auto " onClick={handleIsOpen}>
             <Overlay />
           </div>
         </div>
