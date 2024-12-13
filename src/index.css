@@ -8,3 +8,12 @@ body {
   font-family: "DM Sans", sans-serif;
   background-color: #16191c;
 }
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border-left-color: #fff;
+  animation: spin 1s ease infinite;
+}

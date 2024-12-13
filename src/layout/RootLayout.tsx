@@ -42,10 +42,10 @@ const RootLayout = () => {
 
       {isOpen && (
         <div>
-          <AddUserModal />
-          <div className="pointer-events-auto " onClick={handleIsOpen}>
+          <div className="pointer-events-auto" onClick={handleIsOpen}>
             <Overlay />
           </div>
+          <AddUserModal />
         </div>
       )}
       <Outlet />

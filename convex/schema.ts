@@ -15,4 +15,8 @@ export default defineSchema({
     conversationKey: v.string(),
     message: v.string(),
   }).index("by_conversationKey", ["conversationKey"]),
+
+  userChats: defineTable({
+    
+  })
 });

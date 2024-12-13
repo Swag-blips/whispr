@@ -1,5 +1,5 @@
 import { mutation, query } from "./_generated/server";
-
+import { v } from "convex/values";
 export const store = mutation({
   args: {},
   handler: async (ctx) => {
@@ -42,5 +42,27 @@ export const users = query({
       .take(100);
 
     return users;
+  },
+});
+
+export const getUser = mutation({
+  args: { name: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Must be authenticated");
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("name"), args.name))
+      .collect();
+
+    if (!user.length) {
+      return "No user found";
+    }
+
+    return user;
   },
 });

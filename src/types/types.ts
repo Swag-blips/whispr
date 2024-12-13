@@ -1,5 +1,13 @@
 import { Id } from "../../convex/_generated/dataModel";
 
+export interface User {
+  _id: Id<"users">;
+  _creationTime: number;
+  userId: string;
+  name: string;
+  photoUrl: string;
+  tokenIdentifier: string;
+}
 export interface UserChats {
   firstname: string;
   lastname: string;
