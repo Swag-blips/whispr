@@ -1,6 +1,6 @@
 import { FiPlusCircle } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
@@ -8,24 +8,35 @@ import { useAuth } from "@clerk/clerk-react";
 import useModalStore from "../store/useModalStore";
 import useUserStore from "../store/useUserStore";
 import { useEffect } from "react";
+import { Id } from "../../convex/_generated/dataModel";
+import useChatStore from "../store/useChatStore";
 
 const Chats = () => {
   const userChats = useQuery(api.users.getUserChats);
   const { setIsOpen } = useModalStore();
-  const { userId } = useAuth();
+  // const { userId } = useAuth();
   const { id } = useParams();
 
   const authUser = useQuery(api.users.getAuthUser);
+  const getChat = useMutation(api.chats.getChat);
 
   const { setUser } = useUserStore();
+  const { chat, setChat } = useChatStore();
 
   const handleOpen = () => {
     setIsOpen();
   };
 
-  const setCurrentChat = () => {
-    
-  }
+  const setCurrentChat = async (chatId: Id<"chats">) => {
+    try {
+      const chat = await getChat({ chatId });
+      if (chat) {
+        setChat(chat);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (authUser) {
@@ -57,7 +68,11 @@ const Chats = () => {
       </form>
 
       {userChats?.map((user, index) => (
-        <Link key={index} to={`/chat/${user.chatId}`}>
+        <Link
+          onClick={() => setCurrentChat(user.chatId)}
+          key={index}
+          to={`/chat/${user.chatId}`}
+        >
           <div className="flex cursor-pointer items-center justify-between">
             <div className="flex justify-center items-center gap-4">
               <img

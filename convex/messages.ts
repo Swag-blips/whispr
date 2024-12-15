@@ -3,8 +3,8 @@ import { mutation, query } from "./_generated/server";
 
 export const message = mutation({
   args: {
-    senderId: v.string(),
-    receiverId: v.string(),
+    senderId: v.id("users"),
+    receiverId: v.id("users"),
     chatId: v.id("chats"),
     message: v.string(),
   },

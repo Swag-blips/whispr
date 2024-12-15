@@ -17,13 +17,10 @@ export interface UserChats {
 }
 
 export interface Chat {
-  conversationKey: string;
-  message: string;
-  receiver: Receiver | null;
-  receiverId: string;
-  senderId: string;
+  participant1: Id<"users">;
+  participant2: Id<"users">;
   _creationTime: number;
-  _id: Id<"messages">;
+  _id: Id<"chats">;
 }
 
 interface Receiver {

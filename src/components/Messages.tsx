@@ -2,10 +2,11 @@ import { useQuery } from "convex/react";
 import MessageInput from "./MessageInput";
 import { api } from "../../convex/_generated/api";
 import { useParams } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef } from "react";
 import useChatStore from "../store/useChatStore";
 import { Id } from "../../convex/_generated/dataModel";
+import useUserStore from "../store/useUserStore";
 
 interface Params {
   id: Id<"chats">;
@@ -20,11 +21,11 @@ const Messages = () => {
   const messages = useQuery(api.messages.getMessages, {
     chatId,
   });
-  const { userId } = useAuth();
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
-  const { chat, loading, setLoading, setChat } = useChatStore();
+  const { chat, loading, setLoading } = useChatStore();
+  const { user: authUser } = useUserStore();
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -45,12 +46,12 @@ const Messages = () => {
           {messages?.map((message) => (
             <>
               <div
-                className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === userId ? "justify-end" : ""}`}
+                className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser._id ? "justify-end" : ""}`}
               >
                 <img
-                  src={message.receiver?.photoUrl}
+                  src={""}
                   alt="profile-img"
-                  className={`w-12 h-12 object-cover rounded-full ${message.senderId === userId ? "hidden" : ""}`}
+                  className={`w-12 h-12 object-cover rounded-full ${message.senderId === authUser._id ? "hidden" : ""}`}
                 />
                 <div>
                   <div

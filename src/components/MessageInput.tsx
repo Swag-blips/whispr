@@ -7,6 +7,7 @@ import { useMutation } from "convex/react";
 import { useEffect, useState } from "react";
 import { Id } from "../../convex/_generated/dataModel";
 import useUserStore from "../store/useUserStore";
+import useChatStore from "../store/useChatStore";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
@@ -15,15 +16,15 @@ const MessageInput = () => {
 
   const sendMessage = useMutation(api.messages.message);
   const { user: authUser } = useUserStore();
+  const { chat } = useChatStore();
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (sending) {
       return;
     }
     try {
-      if (!id || !authUser._id || !message) {
+      if (!id || !authUser._id || !message || !chat) {
         return;
       }
 
@@ -33,7 +34,10 @@ const MessageInput = () => {
         message,
         senderId: authUser._id,
         chatId: id as Id<"chats">,
-        receiverId,
+        receiverId:
+          chat.participant1 === authUser._id
+            ? chat.participant2
+            : chat.participant1,
       });
 
       return;
@@ -44,6 +48,8 @@ const MessageInput = () => {
       setSending(false);
     }
   };
+
+
 
   return (
     <form
