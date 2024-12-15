@@ -9,6 +9,9 @@ import Navbar from "../components/Navbar";
 import useModalStore from "../store/useModalStore";
 import AddUserModal from "../components/AddUserModal";
 import Overlay from "../components/Overlay";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import useUserStore from "../store/useUserStore";
 
 const RootLayout = () => {
   const { isLoading, isAuthenticated } = useUserStoreEffect();
@@ -20,6 +23,13 @@ const RootLayout = () => {
       navigate("/sign-in");
     }
   }, [isAuthenticated, isLoading]);
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     setUser(authUser);
+  //   }
+  // }, []);
+
   if (isLoading) {
     return (
       <div className="flex items-center h-screen justify-center">

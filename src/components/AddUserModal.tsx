@@ -5,12 +5,18 @@ import { useState } from "react";
 import { User } from "../types/types";
 import { BiPlus } from "react-icons/bi";
 import Spinner from "../helpers/Spinner";
+import { useAuth } from "@clerk/clerk-react";
+import useUserStore from "../store/useUserStore";
+import { Id } from "../../convex/_generated/dataModel";
 
 const AddUserModal = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User[] | "No user found">();
+
   const getUser = useMutation(api.users.getUser);
+  const addUser = useMutation(api.users.createUserChats);
+  const { user: authUser } = useUserStore();
 
   const handleSearch = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -23,13 +29,26 @@ const AddUserModal = () => {
       const user = await getUser({ name });
 
       setUser(user);
-      console.log(user);
       return user;
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddUser = async (
+    toBeAddedId: Id<"users">,
+    toBeAddedTokenidentifier: string
+  ) => {
+    if (!authUser._id) {
+      return;
+    }
+    await addUser({
+      adderId: authUser._id,
+      toBeAddedId,
+      toBeAddedTokenidentifier,
+    });
   };
 
   return (
@@ -63,7 +82,7 @@ const AddUserModal = () => {
               </div>
 
               <button
-                onClick={handleSearch}
+                onClick={() => handleAddUser(user._id, user.tokenIdentifier)}
                 className="bg-[#8C6EC8] flex items-center justify-center rounded-full w-12 h-12"
               >
                 <BiPlus size={24} color="#ffffff" />

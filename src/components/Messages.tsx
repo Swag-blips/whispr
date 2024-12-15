@@ -5,17 +5,20 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import { useEffect, useRef, useState } from "react";
 import useChatStore from "../store/useChatStore";
+import { Id } from "../../convex/_generated/dataModel";
+
+interface Params {
+  id: Id<"chats">;
+}
 
 const Messages = () => {
-  const [receiverId, setReceiverId] = useState("");
-  const { id: conversationKey } = useParams();
+  const { id: chatId } = useParams<keyof Params>() as Params;
 
-  if (!conversationKey) {
+  if (!chatId) {
     return;
   }
   const messages = useQuery(api.messages.getMessages, {
-    conversationKey,
-    receiverId,
+    chatId,
   });
   const { userId } = useAuth();
 
@@ -26,23 +29,8 @@ const Messages = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(() => {
-    setChat(messages);
-
     scrollToBottom();
   }, [messages, loading]);
-
-  useEffect(() => {
-    const user1Id = conversationKey?.substring(0, 32);
-    const user2Id = conversationKey?.substring(32, 64);
-    const usersArray = [user1Id, user2Id];
-
-    const receiver = usersArray
-      .filter((user) => {
-        return user !== userId;
-      })
-      .join("");
-    setReceiverId(receiver);
-  }, [conversationKey]);
 
   useEffect(() => {
     if (loading) {

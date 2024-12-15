@@ -5,44 +5,28 @@ export const message = mutation({
   args: {
     senderId: v.string(),
     receiverId: v.string(),
-    conversationKey: v.string(),
+    chatId: v.id("chats"),
     message: v.string(),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("messages", {
       senderId: args.senderId,
       receiverId: args.receiverId,
-      conversationKey: args.conversationKey,
+      chatId: args.chatId,
       message: args.message,
     });
   },
 });
 
 export const getMessages = query({
-  args: { conversationKey: v.string(), receiverId: v.string() },
+  args: { chatId: v.id("chats") },
   handler: async (ctx, args) => {
-    const receiver = await ctx.db
-      .query("users")
-      .filter((q) => q.eq(q.field("userId"), args.receiverId))
-      .unique();
-
     const messages = await ctx.db
       .query("messages")
-      .withIndex("by_conversationKey", (q) =>
-        q.eq("conversationKey", args.conversationKey)
-      )
+      .withIndex("by_chatId", (q) => q.eq("chatId", args.chatId))
       .order("desc")
       .take(100);
 
-    
-
-    return Promise.all(
-      messages
-        .map(async (message) => ({
-          ...message,
-          receiver,
-        }))
-        .reverse()
-    );
+    return messages.reverse();
   },
 });

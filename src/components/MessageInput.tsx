@@ -5,16 +5,16 @@ import { useParams } from "react-router-dom";
 import { api } from "../../convex/_generated/api";
 import { useMutation } from "convex/react";
 import { useEffect, useState } from "react";
-import { useAuth } from "@clerk/clerk-react";
+import { Id } from "../../convex/_generated/dataModel";
+import useUserStore from "../store/useUserStore";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
-  const [receiverId, setReceiverId] = useState("");
   const [sending, setSending] = useState(false);
   const { id } = useParams();
 
   const sendMessage = useMutation(api.messages.message);
-  const { userId } = useAuth();
+  const { user: authUser } = useUserStore();
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ const MessageInput = () => {
       return;
     }
     try {
-      if (!id || !userId || !message) {
+      if (!id || !authUser._id || !message) {
         return;
       }
 
@@ -31,8 +31,8 @@ const MessageInput = () => {
 
       await sendMessage({
         message,
-        senderId: userId,
-        conversationKey: id,
+        senderId: authUser._id,
+        chatId: id as Id<"chats">,
         receiverId,
       });
 
@@ -45,18 +45,6 @@ const MessageInput = () => {
     }
   };
 
-  useEffect(() => {
-    const user1Id = id?.substring(0, 32);
-    const user2Id = id?.substring(32, 64);
-    const usersArray = [user1Id, user2Id];
-
-    const receiver = usersArray
-      .filter((user) => {
-        return user !== userId;
-      })
-      .join("");
-    setReceiverId(receiver);
-  }, [id]);
   return (
     <form
       onSubmit={handleSend}

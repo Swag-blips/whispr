@@ -6,16 +6,32 @@ import { Link, useParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 
 import useModalStore from "../store/useModalStore";
+import useUserStore from "../store/useUserStore";
+import { useEffect } from "react";
 
 const Chats = () => {
-  const users = useQuery(api.users.users);
+  const userChats = useQuery(api.users.getUserChats);
   const { setIsOpen } = useModalStore();
   const { userId } = useAuth();
   const { id } = useParams();
 
+  const authUser = useQuery(api.users.getAuthUser);
+
+  const { setUser } = useUserStore();
+
   const handleOpen = () => {
     setIsOpen();
   };
+
+  const setCurrentChat = () => {
+    
+  }
+
+  useEffect(() => {
+    if (authUser) {
+      setUser(authUser);
+    }
+  }, [authUser]);
 
   return (
     <div
@@ -40,25 +56,29 @@ const Chats = () => {
         </div>
       </form>
 
-      {users?.map((user, index) => (
-        <Link key={index} to={`/chat/${[userId, user.userId].sort().join("")}`}>
+      {userChats?.map((user, index) => (
+        <Link key={index} to={`/chat/${user.chatId}`}>
           <div className="flex cursor-pointer items-center justify-between">
             <div className="flex justify-center items-center gap-4">
               <img
-                src={user.photoUrl}
+                src={user.receiver?.photoUrl}
                 alt="profile-img"
                 className=" h-12 w-12 rounded-full object-cover"
               />
 
               <div className="flex flex-col gap-2">
                 <h4 className="text-base font-medium text-left text-[#E2E2E2]">
-                  {user.name}
+                  {user.receiver?.name}
                 </h4>
-                <p className="text-[#A4A2A2] text-xs">Hello there!</p>
+                <p className="text-[#A4A2A2] text-xs">
+                  {user.lastMessage || "Get started Chatting!"}
+                </p>
               </div>
             </div>
 
-            <p className="text-xs text-[#8C8A8A] ">12:40</p>
+            {user.lastMessageTime > 0 && (
+              <p className="text-xs text-[#8C8A8A] ">12:40</p>
+            )}
           </div>
         </Link>
       ))}
