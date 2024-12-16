@@ -15,7 +15,7 @@ const AddUserModal = () => {
   const [user, setUser] = useState<User[] | "No user found">();
 
   const getUser = useMutation(api.users.getUser);
-  const addUser = useMutation(api.users.createUserChats);
+  const addUser = useMutation(api.chats.createUserChats);
   const { user: authUser } = useUserStore();
 
   const handleSearch = async (e: React.FormEvent<HTMLButtonElement>) => {

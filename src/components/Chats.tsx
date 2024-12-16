@@ -12,7 +12,7 @@ import useChatStore from "../store/useChatStore";
 const Chats = () => {
   const { setUser } = useUserStore();
 
-  const userChats = useQuery(api.users.getUserChats);
+  const userChats = useQuery(api.chats.getUserChats);
   const { setIsOpen } = useModalStore();
 
   const { id } = useParams();

@@ -1,10 +1,9 @@
-import profileImg from "/assets/john_doe.jpg";
 import { FiVideo } from "react-icons/fi";
 import { IoCallOutline } from "react-icons/io5";
 import { IoIosMore } from "react-icons/io";
 import useChatStore from "../store/useChatStore";
 import { api } from "../../convex/_generated/api";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { useEffect, useState } from "react";
 import useUserStore from "../store/useUserStore";
 import { useParams } from "react-router-dom";
@@ -16,7 +15,7 @@ const ChatHeader = () => {
   const { id } = useParams();
   const [currentChatUser, setCurrentChatUser] = useState<User | null>();
   const [loading, setLoading] = useState(false);
-  const chatUser = useMutation(api.users.getChatUser);
+  const chatUser = useMutation(api.chats.getChatUser);
 
   const getChatUser = async () => {
     setLoading(true);
