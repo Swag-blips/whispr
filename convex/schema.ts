@@ -7,6 +7,7 @@ export default defineSchema({
     name: v.string(),
     photoUrl: v.string(),
     tokenIdentifier: v.string(),
+    isOnline: v.boolean()
   })
     .index("by_userId", ["userId"])
     .index("by_tokenIdentifier", ["tokenIdentifier"]),

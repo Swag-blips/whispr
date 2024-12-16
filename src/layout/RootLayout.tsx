@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Chats from "../components/Chats";
-import useUserStoreEffect from "../components/useUserStoreEffect";
+import useUserStoreEffect from "../hooks/useUserStoreEffect";
 import { LuLoader } from "react-icons/lu";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,24 +9,19 @@ import Navbar from "../components/Navbar";
 import useModalStore from "../store/useModalStore";
 import AddUserModal from "../components/AddUserModal";
 import Overlay from "../components/Overlay";
-
+import { useNetworkStatus } from "../hooks/useNetworkStatus";
 
 const RootLayout = () => {
   const { isLoading, isAuthenticated } = useUserStoreEffect();
   const { isOpen, setIsOpen } = useModalStore();
   const navigate = useNavigate();
+  const { isOnline } = useNetworkStatus();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       navigate("/sign-in");
     }
   }, [isAuthenticated, isLoading]);
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     setUser(authUser);
-  //   }
-  // }, []);
 
   if (isLoading) {
     return (

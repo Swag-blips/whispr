@@ -18,6 +18,7 @@ export default function useUserStoreEffect() {
 
     async function createUser() {
       const id = await storeUser();
+
       setUserId(id);
     }
 

@@ -4,7 +4,7 @@ import { LuSend } from "react-icons/lu";
 import { useParams } from "react-router-dom";
 import { api } from "../../convex/_generated/api";
 import { useMutation } from "convex/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Id } from "../../convex/_generated/dataModel";
 import useUserStore from "../store/useUserStore";
 import useChatStore from "../store/useChatStore";
@@ -19,7 +19,6 @@ const MessageInput = () => {
   const { chat } = useChatStore();
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(authUser._id);
     e.preventDefault();
     if (sending) {
       return;

@@ -7,6 +7,7 @@ export interface User {
   name: string;
   photoUrl: string;
   tokenIdentifier: string;
+  isOnline: boolean;
 }
 export interface UserChats {
   firstname: string;

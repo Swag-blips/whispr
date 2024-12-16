@@ -3,8 +3,6 @@ import { IoSearchOutline } from "react-icons/io5";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Link, useParams } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
-
 import useModalStore from "../store/useModalStore";
 import useUserStore from "../store/useUserStore";
 import { useEffect } from "react";
@@ -12,15 +10,16 @@ import { Id } from "../../convex/_generated/dataModel";
 import useChatStore from "../store/useChatStore";
 
 const Chats = () => {
+  const { setUser } = useUserStore();
+
   const userChats = useQuery(api.users.getUserChats);
   const { setIsOpen } = useModalStore();
-  // const { userId } = useAuth();
+
   const { id } = useParams();
 
   const authUser = useQuery(api.users.getAuthUser);
   const getChat = useMutation(api.chats.getChat);
 
-  const { setUser } = useUserStore();
   const { setChat } = useChatStore();
 
   const handleOpen = () => {
@@ -75,12 +74,16 @@ const Chats = () => {
         >
           <div className="flex cursor-pointer items-center justify-between">
             <div className="flex justify-center items-center gap-4">
-              <img
-                src={user.receiver?.photoUrl}
-                alt="profile-img"
-                className=" h-12 w-12 rounded-full object-cover"
-              />
-
+              <div className="relative">
+                <img
+                  src={user.receiver?.photoUrl}
+                  alt="profile-img"
+                  className=" h-12 w-12 rounded-full object-cover"
+                />
+                {user.receiver?.isOnline && (
+                  <div className="h-3 w-3 rounded-full absolute bg-green-300 bottom-0  right-0" />
+                )}
+              </div>
               <div className="flex flex-col gap-2">
                 <h4 className="text-base font-medium text-left text-[#E2E2E2]">
                   {user.receiver?.name}

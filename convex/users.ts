@@ -27,13 +27,14 @@ export const store = mutation({
       photoUrl: identity.pictureUrl ?? "Anonymous",
       name: identity.name ?? "Anonymous",
       tokenIdentifier: identity.tokenIdentifier,
+      isOnline: false,
     });
   },
 });
 
 export const getAuthUser = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
@@ -74,11 +75,14 @@ export const getUser = mutation({
 });
 
 export const getChatUser = mutation({
-  args: { userId: v.id("users") },
+  args: { userId: v.optional(v.id("users")) },
   handler: async (ctx, args) => {
-    const user = await ctx.db.get(args.userId);
-
-    return user;
+    if (args.userId) {
+      const user = await ctx.db.get(args.userId);
+      return user;
+    } else {
+      return;
+    }
   },
 });
 
@@ -150,5 +154,26 @@ export const getUserChats = query({
         };
       })
     );
+  },
+});
+
+export const updateUserStatus = mutation({
+  args: { status: v.boolean() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Must be authenticated");
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
+      .unique();
+
+    if (!user) {
+      throw new Error("user not found");
+    }
+    await ctx.db.patch(user._id, { isOnline: args.status });
   },
 });
