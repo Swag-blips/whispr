@@ -24,7 +24,7 @@ const Messages = () => {
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
-  const { chat, loading, setLoading } = useChatStore();
+  const { loading, setLoading } = useChatStore();
   const { user: authUser } = useUserStore();
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,7 +49,7 @@ const Messages = () => {
                 className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser._id ? "justify-end" : ""}`}
               >
                 <img
-                  src={""}
+                  src={message.receiver?.photoUrl}
                   alt="profile-img"
                   className={`w-12 h-12 object-cover rounded-full ${message.senderId === authUser._id ? "hidden" : ""}`}
                 />

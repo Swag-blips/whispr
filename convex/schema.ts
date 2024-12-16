@@ -12,8 +12,8 @@ export default defineSchema({
     .index("by_tokenIdentifier", ["tokenIdentifier"]),
 
   messages: defineTable({
-    senderId: v.string(),
-    receiverId: v.string(),
+    senderId: v.id("users"),
+    receiverId: v.id("users"),
     chatId: v.id("chats"),
     message: v.string(),
   }).index("by_chatId", ["chatId"]),

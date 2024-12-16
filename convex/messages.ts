@@ -27,6 +27,17 @@ export const getMessages = query({
       .order("desc")
       .take(100);
 
-    return messages.reverse();
+    return Promise.all(
+      messages
+        .map(async (message) => {
+          const receiver = await ctx.db.get(message.senderId);
+
+          return {
+            ...message,
+            receiver,
+          };
+        })
+        .reverse()
+    );
   },
 });

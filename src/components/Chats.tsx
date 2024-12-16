@@ -21,7 +21,7 @@ const Chats = () => {
   const getChat = useMutation(api.chats.getChat);
 
   const { setUser } = useUserStore();
-  const { chat, setChat } = useChatStore();
+  const { setChat } = useChatStore();
 
   const handleOpen = () => {
     setIsOpen();

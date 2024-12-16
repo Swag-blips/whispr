@@ -19,6 +19,7 @@ const MessageInput = () => {
   const { chat } = useChatStore();
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(authUser._id);
     e.preventDefault();
     if (sending) {
       return;
@@ -48,8 +49,6 @@ const MessageInput = () => {
       setSending(false);
     }
   };
-
-
 
   return (
     <form
