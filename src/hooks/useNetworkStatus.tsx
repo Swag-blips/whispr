@@ -6,23 +6,26 @@ export const useNetworkStatus = () => {
   const [isOnline, setIsOnline] = useState(true);
 
   const updateIsOnline = useMutation(api.users.updateUserStatus);
-  const updateNetworkStatus = async () => {
-    setIsOnline(navigator.onLine);
+  
 
-    await updateIsOnline({ status: isOnline });
-  };
+  const handleVisibilityChange = async () => {
+
+    setIsOnline(true)
+    if(document.visibilityState === "visible"){
+     setIsOnline(false)
+    }else{
+  setIsOnline(true)
+    }
+   updateIsOnline({status:isOnline})
+  }
+
+
 
   useEffect(() => {
-    window.addEventListener("load", updateNetworkStatus);
-    window.addEventListener("online", updateNetworkStatus);
-    window.addEventListener("offline", updateNetworkStatus);
+   document.addEventListener("visibilitychange", handleVisibilityChange)
 
-    return () => {
-      window.removeEventListener("load", updateNetworkStatus);
-      window.removeEventListener("online", updateNetworkStatus);
-      window.removeEventListener("offline", updateNetworkStatus);
-    };
-  }, [navigator.onLine]);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [document.hidden])
 
   return { isOnline };
 };
