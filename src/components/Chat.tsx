@@ -35,7 +35,7 @@ const Chat = () => {
         <ChatHeader />
         <Messages />
       </div>
-      <div className="xl:w-[17.2222%] hidden ">
+      <div className="xl:w-[17.2222%] hidden relative xl:block  ">
         <ChatInfo />
       </div>
     </>

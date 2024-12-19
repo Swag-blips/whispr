@@ -1,6 +1,6 @@
 const Friends = () => {
   return (
-    <div className="flex items-center gap-4 xl:gap-6 overflow-auto">
+    <div className="flex items-center gap-4 xl:gap-6 no-scrollbar overflow-auto">
       <div className="flex relative flex-col gap-2">
         <img
           src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -26,7 +26,7 @@ const Friends = () => {
           alt="profile-img"
           className="h-12 w-12 rounded-full object-cover"
         />
-        <p className="text-white xl:text-base text-xs text-center">Damien</p>
+        <p className="text-white xl:text-base text-xs text-center">Damie</p>
         <div className="h-3 w-3 rounded-full absolute bg-green-300 top-0  right-2" />
       </div>
       <div className="flex relative flex-col gap-2">

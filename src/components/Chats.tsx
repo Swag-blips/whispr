@@ -91,7 +91,8 @@ const Chats = () => {
                   {user.receiver?.name}
                 </h4>
                 <p className="text-[#A4A2A2] text-xs">
-                  {user.lastMessage || "Get started Chatting!"}
+                  {user.lastMessage ||
+                    `Start Chatting with ${user.receiver?.name}`}
                 </p>
               </div>
             </div>
