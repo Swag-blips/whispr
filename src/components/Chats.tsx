@@ -8,6 +8,7 @@ import useUserStore from "../store/useUserStore";
 import { useEffect } from "react";
 import { Id } from "../../convex/_generated/dataModel";
 import useChatStore from "../store/useChatStore";
+import Friends from "./Friends";
 
 const Chats = () => {
   const { setUser } = useUserStore();
@@ -52,7 +53,8 @@ const Chats = () => {
         <FiPlusCircle onClick={handleOpen} size={24} color="#ffffff" />
       </div>
 
-      <form>
+      <Friends />
+      <form className="mt-2">
         <div className="relative">
           <input
             type="text"

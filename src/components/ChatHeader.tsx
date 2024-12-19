@@ -41,8 +41,6 @@ const ChatHeader = () => {
     getChatUser();
   }, [id, chat]);
 
-  console.log(currentChatUser?.isOnline)
-
   return (
     <header className="h-20 px-6 py-4  sticky bg-[#16191c] z-20 top-0">
       <div className="flex items-center justify-between">
@@ -57,9 +55,7 @@ const ChatHeader = () => {
               {currentChatUser?.name}
             </h4>
             {currentChatUser?.isOnline && (
-              <p className="text-xs text-green-500 font-medium">
-                online
-              </p>
+              <p className="text-xs text-green-500 font-medium">online</p>
             )}
           </div>
         </div>

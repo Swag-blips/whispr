@@ -54,18 +54,18 @@ const MessageInput = () => {
       onSubmit={handleSend}
       className="fixed bottom-0 py-2 px-6 bg-[#16191c] z-10  w-full "
     >
-      <div className=" flex items-center  xl:w-[67%]">
+      <div className=" flex items-center  xl:w-[50%]">
         <div className="relative w-full">
           <input
             onChange={(e) => setMessage(e.target.value)}
             value={message}
-            className=" w-full text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126]"
+            className=" w-full rounded-lg text-xs text-white placeholder:text-xs pl-10 h-14 outline-none bg-[#1E2126]"
             placeholder="Send a message..."
           />
           <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
         </div>
 
-        <div className=" bg-[#1E2126] h-14 right-2 pr-6 flex items-center justify-center">
+        <div className=" bg-[#1E2126] rounded-lg h-14 right-2 pr-6 flex items-center justify-center">
           <button
             type="submit"
             className=" flex  justify-center items-center gap-4"

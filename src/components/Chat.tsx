@@ -6,6 +6,7 @@ import { api } from "../../convex/_generated/api";
 import useChatStore from "../store/useChatStore";
 import { Id } from "../../convex/_generated/dataModel";
 import { useParams } from "react-router-dom";
+import ChatInfo from "./ChatInfo";
 
 const Chat = () => {
   const getChat = useMutation(api.chats.getChat);
@@ -23,16 +24,21 @@ const Chat = () => {
     }
   };
 
-  const {  setChat } = useChatStore();
+  const { setChat } = useChatStore();
   useEffect(() => {
     setCurrentChat(chatId as Id<"chats">);
   }, [chatId, getChat]);
 
   return (
-    <div className="xl:w-[67.22222%] w-full relative flex flex-col">
-      <ChatHeader />
-      <Messages />
-    </div>
+    <>
+      <div className="xl:w-[50%] w-full relative flex flex-col">
+        <ChatHeader />
+        <Messages />
+      </div>
+      <div className="xl:w-[17.2222%] hidden ">
+        <ChatInfo />
+      </div>
+    </>
   );
 };
 
