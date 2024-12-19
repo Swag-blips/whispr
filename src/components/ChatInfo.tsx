@@ -1,6 +1,6 @@
 const ChatInfo = () => {
   return (
-    <div className="flex sticky h-screen top-0 left-0 right-0  bottom-0 flex-col mt-8 ">
+    <div className="sticky h-screen top-0  right-4  bottom-0 flex-col mt-8 ">
       <div className="flex flex-col items-center gap-4">
         <img
           src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -14,7 +14,7 @@ const ChatInfo = () => {
       </div>
 
       <div className="px-4 mt-8">
-        <h2 className="text-base font-medium text-white ">Media Shared</h2>
+        <h2 className="text-base font-medium text-white">Media Shared</h2>
         <div className="grid grid-cols-2 mt-4 gap-4">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

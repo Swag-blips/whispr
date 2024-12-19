@@ -4,6 +4,7 @@ import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import RootLayout from "./layout/RootLayout";
 import SelectChat from "./components/SelectChat";
 import Chat from "./components/Chat";
+import FriendRequests from "./components/FriendRequests";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
         {
           path: "/chat/:id",
           element: <Chat />,
+        },
+        {
+          path: "/friendRequests",
+          element: <FriendRequests />,
         },
       ],
     },

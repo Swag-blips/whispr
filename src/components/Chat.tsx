@@ -31,7 +31,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className="xl:w-[50%] w-full relative flex flex-col">
+      <div className="xl:w-[52%] w-full relative flex flex-col">
         <ChatHeader />
         <Messages />
       </div>

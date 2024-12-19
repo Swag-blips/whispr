@@ -103,6 +103,16 @@ const Chats = () => {
           </div>
         </Link>
       ))}
+      {!userChats?.length && (
+        <div className="flex items-center justify-center h-[50vh] flex-col">
+          <div>
+            <p className="text-white text-center">Your inbox is empty</p>
+            <p className=" text-center text-[#A4A2A2]">
+              once you start a new conversaton, you’ll see it listed here
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
