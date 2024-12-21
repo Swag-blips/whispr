@@ -2,7 +2,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import useModalStore from "../store/useModalStore";
 import useUserStore from "../store/useUserStore";
 import { useEffect } from "react";
@@ -44,9 +44,12 @@ const Chats = () => {
     }
   }, [authUser]);
 
+  const { pathname } = useLocation();
+  const isFriendRequest = pathname === "/friendRequests";
+
   return (
     <div
-      className={`xl:bg-[#1E2126]  relative bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
+      className={`xl:bg-[#1E2126]  relative bg-[#16191C] xl:sticky xl:right-0 xl:left-0 xl:top-0 xl:bottom-0 ${id || isFriendRequest ? "hidden xl:flex xl:pt-8" : ""}  tracking-[-0.1px] w-full xl:w-[23.888%] flex flex-col gap-8 h-screen px-4 pt-8 "`}
     >
       <div className="flex items-center justify-between">
         <h2 className=" font-semibold text-2xl text-white">Chats</h2>
