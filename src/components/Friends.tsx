@@ -27,7 +27,7 @@ const Friends = () => {
           className="h-12 w-12 rounded-full object-cover"
         />
         <p className="text-white xl:text-base text-xs text-center">Damie</p>
-        <div className="h-3 w-3 rounded-full absolute bg-green-300 top-0  right-2" />
+        <div className="h-3 w-3 rounded-full absolute bg-green-300 top-0  right-0" />
       </div>
       <div className="flex relative flex-col gap-2">
         <img
