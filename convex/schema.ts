@@ -7,7 +7,7 @@ export default defineSchema({
     name: v.string(),
     photoUrl: v.string(),
     tokenIdentifier: v.string(),
-    isOnline: v.boolean()
+    isOnline: v.boolean(),
   })
     .index("by_userId", ["userId"])
     .index("by_tokenIdentifier", ["tokenIdentifier"]),
@@ -32,4 +32,9 @@ export default defineSchema({
     participant1: v.id("users"),
     participant2: v.id("users"),
   }),
+
+  friendRequests: defineTable({
+    from: v.id("users"),
+    to: v.id("users"),
+  }).index("by_receiver", ["to"]),
 });

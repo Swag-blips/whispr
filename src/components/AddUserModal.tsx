@@ -5,9 +5,9 @@ import { useState } from "react";
 import { User } from "../types/types";
 import { BiPlus } from "react-icons/bi";
 import Spinner from "../helpers/Spinner";
-import { useAuth } from "@clerk/clerk-react";
 import useUserStore from "../store/useUserStore";
 import { Id } from "../../convex/_generated/dataModel";
+import toast from "react-hot-toast";
 
 const AddUserModal = () => {
   const [name, setName] = useState("");
@@ -15,7 +15,8 @@ const AddUserModal = () => {
   const [user, setUser] = useState<User[] | "No user found">();
 
   const getUser = useMutation(api.users.getUser);
-  const addUser = useMutation(api.chats.createUserChats);
+
+  const sendFriendRequest = useMutation(api.friends.sendFriendRequest);
   const { user: authUser } = useUserStore();
 
   const handleSearch = async (e: React.FormEvent<HTMLButtonElement>) => {
@@ -37,18 +38,16 @@ const AddUserModal = () => {
     }
   };
 
-  const handleAddUser = async (
-    toBeAddedId: Id<"users">,
-    toBeAddedTokenidentifier: string
-  ) => {
+  const handleAddUser = async (toBeAddedId: Id<"users">) => {
     if (!authUser._id) {
       return;
     }
-    await addUser({
-      adderId: authUser._id,
-      toBeAddedId,
-      toBeAddedTokenidentifier,
-    });
+    try {
+      await sendFriendRequest({ from: authUser._id, to: toBeAddedId });
+      toast.success("Request sent successfully");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -82,7 +81,7 @@ const AddUserModal = () => {
               </div>
 
               <button
-                onClick={() => handleAddUser(user._id, user.tokenIdentifier)}
+                onClick={() => handleAddUser(user._id)}
                 className="bg-[#8C6EC8] flex items-center justify-center rounded-full w-12 h-12"
               >
                 <BiPlus size={24} color="#ffffff" />
