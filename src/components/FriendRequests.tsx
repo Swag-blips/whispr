@@ -1,7 +1,12 @@
+import { useQuery } from "convex/react";
 import { IoCheckmark } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
+import { api } from "../../convex/_generated/api";
 
 const FriendRequests = () => {
+  const friendRequests = useQuery(api.friends.fetchFriendRequests);
+
+  console.log(friendRequests);
   return (
     <div className="w-full xl:w-[67.2222%] px-4 py-4 flex flex-col">
       <div className="flex items-center justify-center xl:justify-start gap-2">

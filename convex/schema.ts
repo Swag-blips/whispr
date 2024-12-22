@@ -34,7 +34,7 @@ export default defineSchema({
   }),
 
   friendRequests: defineTable({
-    from: v.id("users"),
-    to: v.id("users"),
+    from: v.string(),
+    to: v.string(),
   }).index("by_receiver", ["to"]),
 });

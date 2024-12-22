@@ -2,18 +2,23 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const sendFriendRequest = mutation({
-  args: { from: v.id("users"), to: v.id("users") },
+  args: { to: v.string() },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("You need to be authenticated to perform this action");
+    }
     await ctx.db.insert("friendRequests", {
-      from: args.from,
+      from: identity.subject,
       to: args.to,
     });
   },
 });
 
 export const fetchFriendRequests = query({
-  args: { to: v.id("users") },
-  handler: async (ctx, args) => {
+  args: {},
+  handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
@@ -22,7 +27,7 @@ export const fetchFriendRequests = query({
 
     const friendRequests = await ctx.db
       .query("friendRequests")
-      .withIndex("by_receiver", (q) => q.eq("to", args.to))
+      .withIndex("by_receiver", (q) => q.eq("to", identity.subject))
       .collect();
 
     return friendRequests;

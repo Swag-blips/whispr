@@ -6,7 +6,6 @@ import { User } from "../types/types";
 import { BiPlus } from "react-icons/bi";
 import Spinner from "../helpers/Spinner";
 import useUserStore from "../store/useUserStore";
-import { Id } from "../../convex/_generated/dataModel";
 import toast from "react-hot-toast";
 
 const AddUserModal = () => {
@@ -38,12 +37,12 @@ const AddUserModal = () => {
     }
   };
 
-  const handleAddUser = async (toBeAddedId: Id<"users">) => {
+  const handleAddUser = async (toBeAddedId: string) => {
     if (!authUser._id) {
       return;
     }
     try {
-      await sendFriendRequest({ from: authUser._id, to: toBeAddedId });
+      await sendFriendRequest({ to: toBeAddedId });
       toast.success("Request sent successfully");
     } catch (error) {
       console.error(error);
@@ -81,7 +80,7 @@ const AddUserModal = () => {
               </div>
 
               <button
-                onClick={() => handleAddUser(user._id)}
+                onClick={() => handleAddUser(user.userId)}
                 className="bg-[#8C6EC8] flex items-center justify-center rounded-full w-12 h-12"
               >
                 <BiPlus size={24} color="#ffffff" />
