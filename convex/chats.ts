@@ -11,10 +11,13 @@ export const getChat = mutation({
 });
 
 export const getChatUser = mutation({
-  args: { userId: v.optional(v.id("users")) },
+  args: { userId: v.string() },
   handler: async (ctx, args) => {
     if (args.userId) {
-      const user = await ctx.db.get(args.userId);
+      const user = await ctx.db
+        .query("users")
+        .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+        .unique();
       return user;
     } else {
       return;
@@ -24,9 +27,7 @@ export const getChatUser = mutation({
 
 export const createUserChats = mutation({
   args: {
-    adderId: v.id("users"),
-    toBeAddedId: v.id("users"),
-    toBeAddedTokenidentifier: v.string(),
+    toBeAddedId: v.string(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -36,16 +37,15 @@ export const createUserChats = mutation({
     }
 
     const chat = await ctx.db.insert("chats", {
-      participant1: args.adderId,
+      participant1: identity.subject,
       participant2: args.toBeAddedId,
     });
 
     await ctx.db.insert("userChats", {
-      userId: args.adderId,
+      userId: identity.subject,
       lastMessage: "",
       lastMessageTime: 0,
       with: args.toBeAddedId,
-      tokenIdentifier: identity.tokenIdentifier,
       chatId: chat,
     });
 
@@ -53,8 +53,7 @@ export const createUserChats = mutation({
       userId: args.toBeAddedId,
       lastMessage: "",
       lastMessageTime: 0,
-      with: args.adderId,
-      tokenIdentifier: args.toBeAddedTokenidentifier,
+      with: identity.subject,
       chatId: chat,
     });
   },
@@ -62,7 +61,7 @@ export const createUserChats = mutation({
 
 export const getUserChats = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
@@ -71,9 +70,7 @@ export const getUserChats = query({
 
     const userChats = await ctx.db
       .query("userChats")
-      .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier)
-      )
+      .withIndex("by_userId", (q) => q.eq("userId", identity.subject))
       .order("desc")
       .take(100);
 
@@ -81,7 +78,7 @@ export const getUserChats = query({
       userChats.map(async (user) => {
         const receiver = await ctx.db
           .query("users")
-          .withIndex("by_id", (q) => q.eq("_id", user.with))
+          .withIndex("by_userId", (q) => q.eq("userId", user.with))
           .unique();
 
         return {

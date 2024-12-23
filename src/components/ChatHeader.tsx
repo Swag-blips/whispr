@@ -54,9 +54,9 @@ const ChatHeader = () => {
             <h4 className="font-medium text-white text-base">
               {currentChatUser?.name}
             </h4>
-            {currentChatUser?.isOnline && (
+            {/* {currentChatUser?.isOnline && (
               <p className="text-xs text-green-500 font-medium">online</p>
-            )}
+            )} */}
           </div>
         </div>
 

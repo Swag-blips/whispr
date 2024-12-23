@@ -18,8 +18,8 @@ export interface UserChats {
 }
 
 export interface Chat {
-  participant1: Id<"users">;
-  participant2: Id<"users">;
+  participant1: string;
+  participant2: string;
   _creationTime: number;
   _id: Id<"chats">;
 }

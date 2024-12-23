@@ -13,8 +13,8 @@ export default defineSchema({
     .index("by_tokenIdentifier", ["tokenIdentifier"]),
 
   messages: defineTable({
-    senderId: v.id("users"),
-    receiverId: v.id("users"),
+    senderId: v.string(),
+    receiverId: v.string(),
     chatId: v.id("chats"),
     message: v.string(),
   }).index("by_chatId", ["chatId"]),
@@ -22,15 +22,14 @@ export default defineSchema({
   userChats: defineTable({
     lastMessage: v.string(),
     lastMessageTime: v.number(),
-    tokenIdentifier: v.string(),
     chatId: v.id("chats"),
-    with: v.id("users"),
-    userId: v.id("users"),
-  }).index("by_tokenIdentifier", ["tokenIdentifier"]),
+    with: v.string(),
+    userId: v.string(),
+  }).index("by_userId", ["userId"]),
 
   chats: defineTable({
-    participant1: v.id("users"),
-    participant2: v.id("users"),
+    participant1: v.string(),
+    participant2: v.string(),
   }),
 
   friendRequests: defineTable({

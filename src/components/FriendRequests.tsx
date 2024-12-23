@@ -1,12 +1,24 @@
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { IoCheckmark } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { api } from "../../convex/_generated/api";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const FriendRequests = () => {
   const friendRequests = useQuery(api.friends.fetchFriendRequests);
+  const acceptFriendRequests = useMutation(api.chats.createUserChats);
+
+  const handleAcceptRequests = async (toBeAddedId: string | undefined) => {
+    if (!toBeAddedId) {
+      return;
+    }
+    try {
+      await acceptFriendRequests({ toBeAddedId });
+      toast.success("You are now friends");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="w-full xl:w-[67.2222%] px-4 py-4 flex flex-col">
@@ -35,7 +47,10 @@ const FriendRequests = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="bg-[#303238] cursor-pointer size-12 flex items-center justify-center rounded-full">
+                <div
+                  onClick={() => handleAcceptRequests(friend.user?.userId)}
+                  className="bg-[#303238] cursor-pointer size-12 flex items-center justify-center rounded-full"
+                >
                   <IoCheckmark size={24} color="#34E449" />
                 </div>
                 <div className="bg-[#303238] cursor-pointer size-12 flex items-center justify-center rounded-full">

@@ -3,14 +3,19 @@ import { mutation, query } from "./_generated/server";
 
 export const message = mutation({
   args: {
-    senderId: v.id("users"),
-    receiverId: v.id("users"),
+    receiverId: v.string(),
     chatId: v.id("chats"),
     message: v.string(),
   },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("You need to be authenticated to perform this action");
+    }
+
     await ctx.db.insert("messages", {
-      senderId: args.senderId,
+      senderId: identity.tokenIdentifier,
       receiverId: args.receiverId,
       chatId: args.chatId,
       message: args.message,
@@ -30,11 +35,12 @@ export const getMessages = query({
     return Promise.all(
       messages
         .map(async (message) => {
-          const receiver = await ctx.db.get(message.senderId);
+          const receiver = await ctx.db
+            .query("users")
+            .withIndex("by_userId", (q) => q.eq("userId", message.receiverId));
 
           return {
             ...message,
-            receiver,
           };
         })
         .reverse()
