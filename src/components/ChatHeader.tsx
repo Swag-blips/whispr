@@ -25,7 +25,7 @@ const ChatHeader = () => {
       }
       const user = await chatUser({
         userId:
-          chat?.participant1 === authUser._id
+          chat?.participant1 === authUser.userId
             ? chat.participant2
             : chat?.participant1,
       });
