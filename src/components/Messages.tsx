@@ -46,12 +46,12 @@ const Messages = () => {
           {messages?.map((message) => (
             <>
               <div
-                className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser._id ? "justify-end" : ""}`}
+                className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser.userId ? "justify-end" : ""}`}
               >
                 <img
                   src={message.receiver?.photoUrl}
                   alt="profile-img"
-                  className={`w-12 h-12 object-cover rounded-full ${message.senderId === authUser._id ? "hidden" : ""}`}
+                  className={`w-12 h-12 object-cover rounded-full ${message.senderId === authUser.userId ? "hidden" : ""}`}
                 />
                 <div>
                   <div

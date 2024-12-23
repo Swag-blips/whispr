@@ -63,3 +63,16 @@ export const fetchFriendRequests = query({
     );
   },
 });
+
+export const handleRejectRequest = mutation({
+  args: { friendRequestId: v.id("friendRequests") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("You need to be authenticated to perform this action");
+    }
+
+    await ctx.db.delete(args.friendRequestId);
+  },
+});

@@ -3,20 +3,46 @@ import { IoCheckmark } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { api } from "../../convex/_generated/api";
 import toast from "react-hot-toast";
+import { Id } from "../../convex/_generated/dataModel";
+import { useState } from "react";
+import Spinner from "../helpers/Spinner";
 
 const FriendRequests = () => {
   const friendRequests = useQuery(api.friends.fetchFriendRequests);
-  const acceptFriendRequests = useMutation(api.chats.createUserChats);
+  const acceptFriendRequest = useMutation(api.chats.createUserChats);
+  const rejectFriendRequest = useMutation(api.friends.handleRejectRequest);
+  const [loading, setLoading] = useState(false);
 
-  const handleAcceptRequests = async (toBeAddedId: string | undefined) => {
-    if (!toBeAddedId) {
+  const handleAcceptRequests = async (
+    toBeAddedId: string | undefined,
+    friendRequestId: Id<"friendRequests">
+  ) => {
+    if (!toBeAddedId || !friendRequestId || loading) {
       return;
     }
+    setLoading(true);
     try {
-      await acceptFriendRequests({ toBeAddedId });
+      await acceptFriendRequest({ toBeAddedId, friendRequestId });
       toast.success("You are now friends");
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRejectRequest = async (friendRequestId: Id<"friendRequests">) => {
+    try {
+      if (!friendRequestId || loading) {
+        return;
+      }
+      setLoading(true);
+      await rejectFriendRequest({ friendRequestId });
+      toast.success("friend request rejected");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,12 +74,23 @@ const FriendRequests = () => {
 
               <div className="flex items-center gap-4">
                 <div
-                  onClick={() => handleAcceptRequests(friend.user?.userId)}
+                  role="button"
+                  onClick={() =>
+                    handleAcceptRequests(friend.user?.userId, friend._id)
+                  }
                   className="bg-[#303238] cursor-pointer size-12 flex items-center justify-center rounded-full"
                 >
-                  <IoCheckmark size={24} color="#34E449" />
+                  {loading ? (
+                    <Spinner />
+                  ) : (
+                    <IoCheckmark size={24} color="#34E449" />
+                  )}
                 </div>
-                <div className="bg-[#303238] cursor-pointer size-12 flex items-center justify-center rounded-full">
+                <div
+                  role="button"
+                  onClick={() => handleRejectRequest(friend._id)}
+                  className="bg-[#303238] cursor-pointer size-12 flex items-center justify-center rounded-full"
+                >
                   <RxCross2 size={24} color="#F53105" />
                 </div>
               </div>

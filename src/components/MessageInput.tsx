@@ -24,7 +24,7 @@ const MessageInput = () => {
       return;
     }
     try {
-      if (!id || !authUser._id || !message || !chat) {
+      if (!id || !authUser.userId || !message || !chat) {
         return;
       }
 
@@ -32,10 +32,10 @@ const MessageInput = () => {
 
       await sendMessage({
         message,
-        senderId: authUser._id,
+
         chatId: id as Id<"chats">,
         receiverId:
-          chat.participant1 === authUser._id
+          chat.participant1 === authUser.userId
             ? chat.participant2
             : chat.participant1,
       });

@@ -28,6 +28,7 @@ export const getChatUser = mutation({
 export const createUserChats = mutation({
   args: {
     toBeAddedId: v.string(),
+    friendRequestId: v.id("friendRequests"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -56,6 +57,8 @@ export const createUserChats = mutation({
       with: identity.subject,
       chatId: chat,
     });
+
+    await ctx.db.delete(args.friendRequestId);
   },
 });
 

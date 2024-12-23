@@ -15,7 +15,7 @@ export const message = mutation({
     }
 
     await ctx.db.insert("messages", {
-      senderId: identity.tokenIdentifier,
+      senderId: identity.subject,
       receiverId: args.receiverId,
       chatId: args.chatId,
       message: args.message,
@@ -37,10 +37,12 @@ export const getMessages = query({
         .map(async (message) => {
           const receiver = await ctx.db
             .query("users")
-            .withIndex("by_userId", (q) => q.eq("userId", message.receiverId));
+            .withIndex("by_userId", (q) => q.eq("userId", message.senderId))
+            .unique();
 
           return {
             ...message,
+            receiver,
           };
         })
         .reverse()
