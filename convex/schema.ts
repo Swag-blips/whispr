@@ -36,5 +36,6 @@ export default defineSchema({
   friendRequests: defineTable({
     from: v.string(),
     to: v.string(),
+    toHasRead: v.boolean(),
   }).index("by_receiver", ["to"]),
 });

@@ -23,6 +23,13 @@ const RootLayout = () => {
     }
   }, [isAuthenticated, isLoading]);
 
+  const handleIsOpen = () => {
+    console.log(isOpen);
+    if (isOpen) {
+      setIsOpen();
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center h-screen justify-center">
@@ -31,14 +38,6 @@ const RootLayout = () => {
     );
   }
 
-  const handleIsOpen = () => {
-    console.log(isOpen);
-    if (isOpen) {
-      setIsOpen();
-    }
-  }; 
-
-  
   return (
     <div className="relative  tracking-[-0.6px] flex-col xl:flex-row flex w-full">
       <Navbar />
