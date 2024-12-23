@@ -11,12 +11,12 @@ export const getChat = mutation({
 });
 
 export const getChatUser = mutation({
-  args: { userId: v.string() },
+  args: { userId: v.optional(v.string()) },
   handler: async (ctx, args) => {
     if (args.userId) {
       const user = await ctx.db
         .query("users")
-        .withIndex("by_userId", (q) => q.eq("userId", args.userId))
+        .withIndex("by_userId", (q) => q.eq("userId", args.userId!))
         .unique();
       return user;
     } else {
