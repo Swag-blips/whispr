@@ -1,0 +1,47 @@
+[
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "lastMessage": "Hey, how are you doing?",
+    "timeOfLastMessage": "15:43",
+    "image": "/assets/john_doe.jpg"
+  },
+  {
+    "firstname": "Michael",
+    "lastname": "Brown",
+    "lastMessage": "Are you available for a quick call?",
+    "timeOfLastMessage": "12:02",
+    "image": "/assets/michael_brown.jpg"
+  },
+
+  {
+    "firstname": "David",
+    "lastname": "Williams",
+    "lastMessage": "Can you please check this out?",
+    "timeOfLastMessage": "17:04",
+    "image": "/assets/david_williams.jpg"
+  },
+
+  {
+    "firstname": "James",
+    "lastname": "Garcia",
+    "lastMessage": "I'll be there in 30 minutes.",
+    "timeOfLastMessage": "20:02",
+    "image": "/assets/james_garcia.jpg"
+  },
+
+  {
+    "firstname": "William",
+    "lastname": "Lee",
+    "lastMessage": "That sounds like a good idea!",
+    "timeOfLastMessage": "19:12",
+    "image": "/assets/william_lee.jpg"
+  },
+  {
+    "firstname": "Ava",
+    "lastname": "Anderson",
+    "lastMessage": "Yes, I’m available after 3 PM.",
+    "timeOfLastMessage": "8:00",
+    "image": "/assets/ava_anderson.jpg"
+  }
+]
