@@ -3,6 +3,8 @@ import { mutation, query } from "./_generated/server";
 
 export const message = mutation({
   args: {
+    image:v.optional(v.id("_storage")),
+    format: v.optional(v.string()),
     receiverId: v.string(),
     chatId: v.id("chats"),
     message: v.string(),
@@ -13,9 +15,12 @@ export const message = mutation({
     if (!identity) {
       throw new Error("You need to be authenticated to perform this action");
     }
+    
 
     await ctx.db.insert("messages", {
       senderId: identity.subject,
+      image: args.image,
+      format: args.image ? "image" : "",
       receiverId: args.receiverId,
       chatId: args.chatId,
       message: args.message,
@@ -39,10 +44,19 @@ export const getMessages = query({
             .query("users")
             .withIndex("by_userId", (q) => q.eq("userId", message.senderId))
             .unique();
+        
+
+            let image;
+            if(message.format ==="image"){
+             image =  await ctx.storage.getUrl(message.image!)
+
+  
+            }
 
           return {
             ...message,
             receiver,
+            image
           };
         })
         .reverse()

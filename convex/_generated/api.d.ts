@@ -16,6 +16,7 @@ import type {
 import type * as chats from "../chats.js";
 import type * as friends from "../friends.js";
 import type * as messages from "../messages.js";
+import type * as upload from "../upload.js";
 import type * as users from "../users.js";
 
 /**
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   chats: typeof chats;
   friends: typeof friends;
   messages: typeof messages;
+  upload: typeof upload;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

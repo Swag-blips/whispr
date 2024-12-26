@@ -16,7 +16,9 @@ export default defineSchema({
     senderId: v.string(),
     receiverId: v.string(),
     chatId: v.id("chats"),
-    message: v.string(),
+    message: v.optional(v.string()),
+    image: v.optional(v.id("_storage")),
+    format: v.string()
   }).index("by_chatId", ["chatId"]),
 
   userChats: defineTable({

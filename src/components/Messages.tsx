@@ -8,7 +8,7 @@ import useChatStore from "../store/useChatStore";
 import { Id } from "../../convex/_generated/dataModel";
 import useUserStore from "../store/useUserStore";
 
-interface Params {
+export interface Params {
   id: Id<"chats">;
 }
 
@@ -21,6 +21,9 @@ const Messages = () => {
   const messages = useQuery(api.messages.getMessages, {
     chatId,
   });
+
+
+  console.log(messages)
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
@@ -54,6 +57,15 @@ const Messages = () => {
                   className={`w-12 h-12 object-cover rounded-full ${message.senderId === authUser.userId ? "hidden" : ""}`}
                 />
                 <div>
+
+                  {message.format === "image" && (
+                    <img src={message.image!}  className="
+                    
+                    
+                    
+                    
+                    " alt="image" />
+                  )}
                   <div
                     className={`bg-[#1E2126] max-w-[300px] py-4 px-4 rounded-lg`}
                   >

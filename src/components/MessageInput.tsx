@@ -16,7 +16,7 @@ const MessageInput = () => {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const { id } = useParams();
+  const { id: chatId } = useParams();
 
   const sendMessage = useMutation(api.messages.message);
   const { user: authUser } = useUserStore();
@@ -35,7 +35,7 @@ const MessageInput = () => {
       return;
     }
     try {
-      if (!id || !authUser.userId || !message || !chat) {
+      if (!chatId || !authUser.userId || !message || !chat) {
         return;
       }
 
@@ -44,7 +44,7 @@ const MessageInput = () => {
       await sendMessage({
         message,
 
-        chatId: id as Id<"chats">,
+        chatId: chatId as Id<"chats">,
         receiverId:
           chat.participant1 === authUser.userId
             ? chat.participant2
@@ -123,8 +123,10 @@ const MessageInput = () => {
 
       {isOpen && (
         <>
-          <AddPicture isOpen={isOpen} setIsOpen={setIsOpen} image={image} />
-          <Overlay />
+        {chat && (
+            <><AddPicture chatId={chatId} participant1={chat.participant1} participant2={chat.participant2} authUserId={authUser.userId} isOpen={isOpen} setIsOpen={setIsOpen} image={image} /><Overlay /></>
+        )}
+          
         </>
       )}
     </form>
