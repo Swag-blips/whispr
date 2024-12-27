@@ -9,16 +9,19 @@ type Props = {
   isOpen: boolean;
   chatId: string | undefined,
   authUserId: string | null,
+  selectedImage: File | null
   participant1: string ,
   participant2: string,
   setIsOpen: (value:boolean) => void
 };
 
-const AddPicture = ({ image, chatId, isOpen, authUserId, participant1, participant2, setIsOpen }: Props) => {
+const AddPicture = ({ image, chatId, isOpen, selectedImage, authUserId, participant1, participant2, setIsOpen }: Props) => {
  const [text, setText] = useState("");
  const generateUploadUrl = useMutation(api.upload.generateUploadUrl)
  const sendMessage = useMutation(api.messages.message)
 
+
+ console.log(selectedImage)
   const handleUploadImage = async (e:React.FormEvent) => {
       e.preventDefault();
 
@@ -30,9 +33,9 @@ const AddPicture = ({ image, chatId, isOpen, authUserId, participant1, participa
       const result = await fetch(postUrl, {
         method: "POST",
         headers:{
-            "Content-Type": "application/json"
+            "Content-Type": selectedImage?.type!
         },
-        body: image
+        body: selectedImage
       })
 
       const {storageId} = await result.json()
