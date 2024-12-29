@@ -44,7 +44,7 @@ const Messages = () => {
 
   return (
     <>
-      <main className="px-6 relative mt-6">
+      <main className="px-6 font-medium relative mt-6">
         <div className="flex flex-col gap-6 justify-center">
           {messages?.map((message) => (
             <>
@@ -54,21 +54,17 @@ const Messages = () => {
                 <img
                   src={message.receiver?.photoUrl}
                   alt="profile-img"
-                  className={`w-12 h-12 object-cover rounded-full ${message.senderId === authUser.userId ? "hidden" : ""}`}
+                  className={`w-10 h-10 object-cover rounded-full ${message.senderId === authUser.userId ? "hidden" : ""}`}
                 />
                 <div>
 
-                  {message.format === "image" && (
-                    <img src={message.image!}  className="
-                    
-                    
-                    
-                    
-                    " alt="image" />
-                  )}
+                 
                   <div
-                    className={`bg-[#1E2126] max-w-[300px] py-4 px-4 rounded-lg`}
+                    className={`bg-[#1E2126] max-w-[300px] ${message.format === "image" && "flex flex-col gap-2"} py-4 px-4 rounded-lg`}
                   >
+                     {message.format === "image" && (
+                    <img src={message.image!}  className="rounded-lg" alt="image" />
+                  )}
                     <p className="text-xs break-words leading-[20px] text-white ">
                       {message.message}
                     </p>

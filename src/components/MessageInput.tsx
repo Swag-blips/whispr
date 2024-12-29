@@ -84,7 +84,7 @@ const MessageInput = () => {
       onSubmit={handleSend}
       className="fixed bottom-0 py-3 px-6 bg-[#16191c] z-10  w-full "
     >
-      <div className=" flex items-center  xl:w-[50%]">
+      <div className=" flex items-center  xl:w-[49%]">
         <div className="relative w-full">
           <input
             onChange={(e) => setMessage(e.target.value)}
@@ -125,7 +125,7 @@ const MessageInput = () => {
       {isOpen && (
         <>
         {chat && (
-            <><AddPicture chatId={chatId} selectedImage={selectedImage} participant1={chat.participant1} participant2={chat.participant2} authUserId={authUser.userId} isOpen={isOpen} setIsOpen={setIsOpen} image={image} /><Overlay /></>
+            <><AddPicture chatId={chatId} setSelectedImage={setSelectedImage} setImage={setImage} selectedImage={selectedImage} participant1={chat.participant1} participant2={chat.participant2} authUserId={authUser.userId} isOpen={isOpen} setIsOpen={setIsOpen} image={image} /><Overlay /></>
         )}
           
         </>

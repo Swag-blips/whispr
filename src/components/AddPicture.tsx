@@ -7,6 +7,8 @@ import { Id } from "../../convex/_generated/dataModel";
 type Props = {
   image: string | null;
   isOpen: boolean;
+  setSelectedImage: (image: File | null) => void,
+  setImage: (image:string | null) => void,
   chatId: string | undefined,
   authUserId: string | null,
   selectedImage: File | null
@@ -15,13 +17,12 @@ type Props = {
   setIsOpen: (value:boolean) => void
 };
 
-const AddPicture = ({ image, chatId, isOpen, selectedImage, authUserId, participant1, participant2, setIsOpen }: Props) => {
+const AddPicture = ({ image, chatId, setSelectedImage, isOpen, selectedImage, setImage, authUserId, participant1, participant2, setIsOpen }: Props) => {
  const [text, setText] = useState("");
  const generateUploadUrl = useMutation(api.upload.generateUploadUrl)
  const sendMessage = useMutation(api.messages.message)
 
 
- console.log(selectedImage)
   const handleUploadImage = async (e:React.FormEvent) => {
       e.preventDefault();
 
@@ -39,12 +40,20 @@ const AddPicture = ({ image, chatId, isOpen, selectedImage, authUserId, particip
       })
 
       const {storageId} = await result.json()
-      console.log(storageId)
+      
 
-      await sendMessage({ chatId:chatId as Id<"chats">, message:text, receiverId:
-        participant1 === authUserId
-          ? participant2
-          : participant1, format: "image", image:storageId})
+
+      if(text){
+        await sendMessage({ chatId:chatId as Id<"chats">, message:text, receiverId:
+          participant1 === authUserId
+            ? participant2
+            : participant1, format: "image", image:storageId})
+      }
+
+      setIsOpen(false)
+      setSelectedImage(null)
+      setImage(null)
+   
       } catch (error) {
         console.error(error)
       }
