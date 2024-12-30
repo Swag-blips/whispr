@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 import useUserStore from '../store/useUserStore'
 import { useParams } from 'react-router-dom'
 import { User } from '../types/types'
-import { Id } from '../../convex/_generated/dataModel'
 import { FaUserGroup } from 'react-icons/fa6'
 
 const ChatHeader = () => {
@@ -41,9 +40,7 @@ const ChatHeader = () => {
 
   useEffect(() => {
     getChatUser()
-  })
-
-
+  }, [id,chat])
 
   return (
     <header className='h-20 px-6 py-4  sticky bg-[#16191c] z-10 top-0'>
@@ -72,7 +69,7 @@ const ChatHeader = () => {
 
                {chat?.type === "Group" && (
             <h4 className='font-medium text-white text-base'>
-              {chat.groupName}
+              {chat?.groupName}
             </h4>)}
 
           

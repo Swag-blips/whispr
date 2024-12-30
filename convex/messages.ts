@@ -5,7 +5,7 @@ export const message = mutation({
   args: {
     image:v.optional(v.id("_storage")),
     format: v.optional(v.string()),
-    receiverId: v.string(),
+    receiverId: v.optional(v.string()),
     chatId: v.id("chats"),
     message: v.string(),
   },
@@ -31,35 +31,44 @@ export const message = mutation({
 export const getMessages = query({
   args: { chatId: v.id("chats") },
   handler: async (ctx, args) => {
+
+    const chat = await ctx.db.get(args.chatId)
+
+
     const messages = await ctx.db
       .query("messages")
       .withIndex("by_chatId", (q) => q.eq("chatId", args.chatId))
       .order("desc")
       .take(100);
+      
 
-    return Promise.all(
-      messages
-        .map(async (message) => {
-          const receiver = await ctx.db
-            .query("users")
-            .withIndex("by_userId", (q) => q.eq("userId", message.senderId))
-            .unique();
-        
+   
+        return Promise.all(
+          messages
+            .map(async (message) => {
+              const receiver = await ctx.db
+                .query("users")
+                .withIndex("by_userId", (q) => q.eq("userId", message.senderId))
+                .unique();
+            
+    
+                let image;
+                if(message.format ==="image"){
+                 image =  await ctx.storage.getUrl(message.image!)
+    
+      
+                }
+    
+              return {
+                ...message,
+                receiver,
+                image
+              };
+            })
+            .reverse()
+        );
+      }
 
-            let image;
-            if(message.format ==="image"){
-             image =  await ctx.storage.getUrl(message.image!)
-
+   
   
-            }
-
-          return {
-            ...message,
-            receiver,
-            image
-          };
-        })
-        .reverse()
-    );
-  },
 });

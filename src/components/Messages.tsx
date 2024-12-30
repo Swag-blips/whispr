@@ -23,8 +23,6 @@ const Messages = () => {
   });
 
 
-  console.log(messages)
-
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const { loading, setLoading } = useChatStore();
