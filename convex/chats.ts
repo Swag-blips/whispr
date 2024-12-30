@@ -83,8 +83,11 @@ export const getUserChats = query({
           .withIndex("by_userId", (q) => q.eq("userId", user.with!))
           .unique();
 
+        const chat = await ctx.db.get(user.chatId)
+
         return {
           ...user,
+          chat,
           receiver,
         };
       })
@@ -94,7 +97,7 @@ export const getUserChats = query({
 
 
 export const createGroupChat = mutation({
-  args:{participants: v.array(v.string())},
+  args:{participants: v.array(v.string()), groupName: v.string()},
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
@@ -108,6 +111,7 @@ export const createGroupChat = mutation({
       type: "Group",
       participants: combinedParticipants,
       lastMessage: "",
+      groupName: args.groupName,
       lastMessageTime: Date.now()
     })
 

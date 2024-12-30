@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { Id } from "../../convex/_generated/dataModel";
 import useChatStore from "../store/useChatStore";
 import Friends from "./Friends";
-
+import { FaUserGroup } from "react-icons/fa6";
 const Chats = () => {
   const { setUser } = useUserStore();
 
@@ -80,29 +80,33 @@ const Chats = () => {
           <div className="flex cursor-pointer items-center justify-between">
             <div className="flex justify-center items-center gap-4">
               <div className="relative">
-                <img
-                  src={user.receiver?.photoUrl}
-                  alt="profile-img"
-                  className=" h-12 w-12 rounded-full object-cover"
-                />
+                {user.receiver && (
+                  <img
+                    src={user.receiver?.photoUrl}
+                    alt="profile-img"
+                    className=" h-12 w-12 rounded-full object-cover"
+                  />
+                )}
+
+                {!user.receiver && (
+                  <div className="h-12 flex items-center justify-center w-12 bg-gray-600 rounded-full">
+                    <FaUserGroup size={24} color="#ffffff" />
+                  </div>
+                )}
                 {user.receiver?.isOnline && (
                   <div className="h-3 w-3 rounded-full absolute bg-green-300 bottom-0  right-0" />
                 )}
               </div>
               <div className="flex flex-col gap-2">
                 <h4 className="text-base font-medium text-left text-[#E2E2E2]">
-                  {user.receiver?.name}
+                  {user.receiver?.name || user.chat?.groupName }
                 </h4>
                 <p className="text-[#A4A2A2] text-xs">
-                  {user.lastMessage ||
-                    `Start Chatting with ${user.receiver?.name}`}
+                  {user.chat?.lastMessage ||
+                    `Start Chatting with ${user.receiver?.name || user.chat?.groupName}`}
                 </p>
               </div>
             </div>
-
-            {user.lastMessageTime > 0 && (
-              <p className="text-xs text-[#8C8A8A] ">12:40</p>
-            )}
           </div>
         </Link>
       ))}

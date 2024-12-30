@@ -31,6 +31,7 @@ export default defineSchema({
   chats: defineTable({
     type: v.string(),
     admin: v.optional(v.string()),
+    groupName: v.optional(v.string()),
     participant1: v.optional(v.string()),
     participant2: v.optional(v.string()),
     participants: v.optional(v.array(v.string())),
