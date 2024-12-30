@@ -3,14 +3,17 @@ import { GoHomeFill } from "react-icons/go";
 import { BsChatText } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
-
+import { CiCirclePlus } from "react-icons/ci";
 import { UserButton } from "@clerk/clerk-react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CreateGroup from "./CreateGroup";
+import Overlay from "./Overlay";
 
 const Sidebar = () => {
+  const [openGroupModal, setOpenGroupModal] = useState(false)
   const friendRequests = useQuery(api.friends.fetchFriendRequests);
   const updateFriendRequest = useMutation(
     api.friends.updateLatestFriendRequest
@@ -66,6 +69,11 @@ const Sidebar = () => {
     notifyFriendRequest();
     return () => toast.dismiss();
   }, [friendRequests]);
+
+
+  const handleOpenCreateGroup = () => {
+setOpenGroupModal(true)
+  }
   return (
     <aside className="bg-[#12171D]  hidden xl:flex sticky right-0 left-0 top-0 bottom-0 py-6 justify-center w-[8.8888%] h-screen">
       <div className="flex flex-col justify-between items-center">
@@ -79,6 +87,7 @@ const Sidebar = () => {
             <BsChatText size={24} className="text-white" />
             <CgProfile size={24} className="text-white" />
             <IoSettingsOutline size={24} className="text-white" />
+            <CiCirclePlus onClick={handleOpenCreateGroup} size={24} className="text-white" />
           </div>
         </div>
 
@@ -86,6 +95,12 @@ const Sidebar = () => {
           <UserButton />
         </figure>
       </div>
+
+      {openGroupModal && <>
+      <CreateGroup />
+      <Overlay/>
+       
+        </>}
     </aside>
   );
 };

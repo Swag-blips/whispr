@@ -38,22 +38,21 @@ export const createUserChats = mutation({
     }
 
     const chat = await ctx.db.insert("chats", {
+      type: "Private",
       participant1: identity.subject,
       participant2: args.toBeAddedId,
+      lastMessage: "",
+      lastMessageTime: Date.now()
     });
 
     await ctx.db.insert("userChats", {
       userId: identity.subject,
-      lastMessage: "",
-      lastMessageTime: 0,
       with: args.toBeAddedId,
       chatId: chat,
     });
 
     await ctx.db.insert("userChats", {
       userId: args.toBeAddedId,
-      lastMessage: "",
-      lastMessageTime: 0,
       with: identity.subject,
       chatId: chat,
     });
@@ -81,7 +80,7 @@ export const getUserChats = query({
       userChats.map(async (user) => {
         const receiver = await ctx.db
           .query("users")
-          .withIndex("by_userId", (q) => q.eq("userId", user.with))
+          .withIndex("by_userId", (q) => q.eq("userId", user.with!))
           .unique();
 
         return {
@@ -92,3 +91,32 @@ export const getUserChats = query({
     );
   },
 });
+
+
+export const createGroupChat = mutation({
+  args:{participants: v.array(v.string())},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Must be authenticated");
+    }
+
+    const combinedParticipants = [...args.participants, identity.subject]
+    const chat = await ctx.db.insert("chats", {
+      admin: identity.subject,
+      type: "Group",
+      participants: combinedParticipants,
+      lastMessage: "",
+      lastMessageTime: Date.now()
+    })
+
+   Promise.all(combinedParticipants.map(async participant => {
+    await ctx.db.insert("userChats", {
+      userId: participant,
+      chatId: chat,
+      groupPic: "",
+    })
+  }))
+  }
+})

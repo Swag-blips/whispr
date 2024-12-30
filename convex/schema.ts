@@ -22,16 +22,20 @@ export default defineSchema({
   }).index("by_chatId", ["chatId"]),
 
   userChats: defineTable({
-    lastMessage: v.string(),
-    lastMessageTime: v.number(),
     chatId: v.id("chats"),
-    with: v.string(),
+    with: v.optional(v.string()),
     userId: v.string(),
+    groupPic: v.optional(v.string())
   }).index("by_userId", ["userId"]),
 
   chats: defineTable({
-    participant1: v.string(),
-    participant2: v.string(),
+    type: v.string(),
+    admin: v.optional(v.string()),
+    participant1: v.optional(v.string()),
+    participant2: v.optional(v.string()),
+    participants: v.optional(v.array(v.string())),
+    lastMessage: v.string(),
+    lastMessageTime: v.number(),
   }),
 
   friendRequests: defineTable({
