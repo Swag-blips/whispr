@@ -11,13 +11,16 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import CreateGroup from "./CreateGroup";
 import Overlay from "./Overlay";
+import useGroupStore from "../store/useGroupStore";
 
 const Sidebar = () => {
-  const [openGroupModal, setOpenGroupModal] = useState(false)
+  const [openGroupModal, setOpenGroupModal] = useState(false);
   const friendRequests = useQuery(api.friends.fetchFriendRequests);
   const updateFriendRequest = useMutation(
     api.friends.updateLatestFriendRequest
   );
+
+  const { setIsOpen } = useGroupStore();
 
   const delay = (time: number) => {
     return new Promise((res) => {
@@ -41,7 +44,7 @@ const Sidebar = () => {
             alt="success"
             className="mr-[8px] h-8 w-8 rounded-full"
           />
-          <p className="text-[12px]">
+          <p className="text-xs">
             You received a friend request from{" "}
             {friendRequests[friendRequests.length - 1].user?.name}
           </p>
@@ -70,10 +73,6 @@ const Sidebar = () => {
     return () => toast.dismiss();
   }, [friendRequests]);
 
-
-  const handleOpenCreateGroup = () => {
-setOpenGroupModal(true)
-  }
   return (
     <aside className="bg-[#12171D]  hidden xl:flex sticky right-0 left-0 top-0 bottom-0 py-6 justify-center w-[8.8888%] h-screen">
       <div className="flex flex-col justify-between items-center">
@@ -87,7 +86,11 @@ setOpenGroupModal(true)
             <BsChatText size={24} className="text-white" />
             <CgProfile size={24} className="text-white" />
             <IoSettingsOutline size={24} className="text-white" />
-            <CiCirclePlus onClick={handleOpenCreateGroup} size={24} className="text-white" />
+            <CiCirclePlus
+              onClick={setIsOpen}
+              size={24}
+              className="text-white"
+            />
           </div>
         </div>
 
@@ -95,12 +98,6 @@ setOpenGroupModal(true)
           <UserButton />
         </figure>
       </div>
-
-      {openGroupModal && <>
-      <CreateGroup />
-      <Overlay/>
-       
-        </>}
     </aside>
   );
 };

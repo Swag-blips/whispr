@@ -10,12 +10,16 @@ import useModalStore from "../store/useModalStore";
 import AddUserModal from "../components/AddUserModal";
 import Overlay from "../components/Overlay";
 import { useNetworkStatus } from "../hooks/useNetworkStatus";
+import useGroupStore from "../store/useGroupStore";
+import CreateGroup from "../components/CreateGroup";
 
 const RootLayout = () => {
   const { isLoading, isAuthenticated } = useUserStoreEffect();
   const { isOpen, setIsOpen } = useModalStore();
   const navigate = useNavigate();
   const { isOnline } = useNetworkStatus();
+
+  const { isOpen: isGroupOpen } = useGroupStore();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -51,6 +55,12 @@ const RootLayout = () => {
           </div>
           <AddUserModal />
         </div>
+      )}
+      {isGroupOpen && (
+        <>
+          <CreateGroup />
+          <Overlay />
+        </>
       )}
       <Outlet />
     </div>

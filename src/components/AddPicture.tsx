@@ -13,8 +13,8 @@ type Props = {
   chatId: string | undefined;
   authUserId: string | null;
   selectedImage: File | null;
-  participant1: string;
-  participant2: string;
+  participant1: string | undefined;
+  participant2: string | undefined;
   setIsOpen: (value: boolean) => void;
 };
 
@@ -66,9 +66,9 @@ const AddPicture = ({
         });
       }
 
-      setIsOpen(false);
       setSelectedImage(null);
       setImage(null);
+      setIsOpen(false);
     } catch (error) {
       console.error(error);
     } finally {

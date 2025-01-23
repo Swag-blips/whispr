@@ -23,7 +23,7 @@ const MessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { chat } = useChatStore();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null)
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const handleImageUploadClick = () => {
     setIsOpen(true);
     fileInputRef.current?.click();
@@ -65,7 +65,7 @@ const MessageInput = () => {
       return;
     }
     const file = e.target.files[0];
-    setSelectedImage(file)
+    setSelectedImage(file);
     if (!file) return;
 
     const reader = new FileReader();
@@ -124,10 +124,23 @@ const MessageInput = () => {
 
       {isOpen && (
         <>
-        {chat && (
-            <><AddPicture chatId={chatId} setSelectedImage={setSelectedImage} setImage={setImage} selectedImage={selectedImage} participant1={chat.participant1} participant2={chat.participant2} authUserId={authUser.userId} isOpen={isOpen} setIsOpen={setIsOpen} image={image} /><Overlay /></>
-        )}
-          
+          {chat && (
+            <>
+              <AddPicture
+                chatId={chatId}
+                setSelectedImage={setSelectedImage}
+                setImage={setImage}
+                selectedImage={selectedImage}
+                participant1={chat.participant1}
+                participant2={chat.participant2}
+                authUserId={authUser.userId}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                image={image}
+              />
+              <Overlay />
+            </>
+          )}
         </>
       )}
     </form>
