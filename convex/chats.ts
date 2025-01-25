@@ -8,8 +8,6 @@ export const getChat = mutation({
 
     return chat;
   },
-
-  
 });
 
 export const getChatUser = mutation({
