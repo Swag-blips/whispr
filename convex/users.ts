@@ -9,6 +9,9 @@ export const store = mutation({
     if (!identity) {
       throw new Error("Called storeUser without authentication present");
     }
+    
+
+    console.log("Called");
 
     const user = await ctx.db
       .query("users")
@@ -19,6 +22,8 @@ export const store = mutation({
       if (user.name !== identity.name) {
         await ctx.db.patch(user._id, { name: identity.name });
       }
+
+      console.log("Here");
       return user._id;
     }
 

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Chats from "../components/Chats";
-import useUserStoreEffect from "../hooks/useUserStoreEffect";
+import useStoreUserEffect from "../hooks/useUserStoreEffect";
 import { LuLoader } from "react-icons/lu";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import useGroupStore from "../store/useGroupStore";
 import CreateGroup from "../components/CreateGroup";
 
 const RootLayout = () => {
-  const { isLoading, isAuthenticated } = useUserStoreEffect();
+  const { isLoading, isAuthenticated } = useStoreUserEffect();
   const { isOpen, setIsOpen } = useModalStore();
   const navigate = useNavigate();
   const { isOnline } = useNetworkStatus();

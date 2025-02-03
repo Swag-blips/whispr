@@ -44,33 +44,41 @@ const Messages = () => {
     <>
       <main className="px-6 font-medium relative mt-6">
         <div className="flex flex-col gap-6 justify-center">
-          {messages?.map((message) => (
+          {!messages?.length ? (
+            <p>Loading....</p>
+          ) : (
             <>
-              <div
-                className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser.userId ? "justify-end" : ""}`}
-              >
-                <img
-                  src={message.receiver?.photoUrl}
-                  alt="profile-img"
-                  className={`w-10 h-10 object-cover rounded-full ${message.senderId === authUser.userId ? "hidden" : ""}`}
-                />
-                <div>
-
-                 
+              {messages?.map((message) => (
+                <>
                   <div
-                    className={`bg-[#1E2126] max-w-[300px] ${message.format === "image" && "flex flex-col gap-2"} py-4 px-4 rounded-lg`}
+                    className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser.userId ? "justify-end" : ""}`}
                   >
-                     {message.format === "image" && (
-                    <img src={message.image!}  className="rounded-lg" alt="image" />
-                  )}
-                    <p className="text-xs break-words leading-[20px] text-white ">
-                      {message.message}
-                    </p>
+                    <img
+                      src={message.receiver?.photoUrl}
+                      alt="profile-img"
+                      className={`w-10 h-10 object-cover rounded-full ${message.senderId === authUser.userId ? "hidden" : ""}`}
+                    />
+                    <div>
+                      <div
+                        className={`bg-[#1E2126] max-w-[300px] ${message.format === "image" && "flex flex-col gap-2"} py-4 px-4 rounded-lg`}
+                      >
+                        {message.format === "image" && (
+                          <img
+                            src={message.image!}
+                            className="rounded-lg"
+                            alt="image"
+                          />
+                        )}
+                        <p className="text-xs break-words leading-[20px] text-white ">
+                          {message.message}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </>
+              ))}
             </>
-          ))}
+          )}
         </div>
         <div ref={messagesEndRef} className="end" />
       </main>
