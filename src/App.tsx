@@ -5,6 +5,7 @@ import RootLayout from "./layout/RootLayout";
 import SelectChat from "./components/SelectChat";
 import Chat from "./components/Chat";
 import FriendRequests from "./components/FriendRequests";
+import AuthCallback from "./pages/AuthCallback";
 
 function App() {
   const router = createBrowserRouter([
@@ -29,12 +30,9 @@ function App() {
       path: "/sign-in",
       element: <SignIn />,
     },
-
     {
-      path: "/sign-in/sso-callback",
-      element: (
-        <AuthenticateWithRedirectCallback signUpForceRedirectUrl={"/"} />
-      ),
+      path: "/auth-callback",
+      element: <AuthCallback />,
     },
   ]);
   return <RouterProvider router={router} />;

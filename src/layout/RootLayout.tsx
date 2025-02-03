@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Chats from "../components/Chats";
-import useStoreUserEffect from "../hooks/useUserStoreEffect";
-import { LuLoader } from "react-icons/lu";
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -12,20 +11,22 @@ import Overlay from "../components/Overlay";
 import { useNetworkStatus } from "../hooks/useNetworkStatus";
 import useGroupStore from "../store/useGroupStore";
 import CreateGroup from "../components/CreateGroup";
+import { useAuth } from "@clerk/clerk-react";
+import { LuLoader } from "react-icons/lu";
 
 const RootLayout = () => {
-  const { isLoading, isAuthenticated } = useStoreUserEffect();
   const { isOpen, setIsOpen } = useModalStore();
+  const { isLoaded, userId } = useAuth();
   const navigate = useNavigate();
   const { isOnline } = useNetworkStatus();
 
   const { isOpen: isGroupOpen } = useGroupStore();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isLoaded && !userId) {
       navigate("/sign-in");
     }
-  }, [isAuthenticated, isLoading]);
+  }, [userId]);
 
   const handleIsOpen = () => {
     console.log(isOpen);
@@ -34,7 +35,7 @@ const RootLayout = () => {
     }
   };
 
-  if (isLoading) {
+  if (!isLoaded) {
     return (
       <div className="flex items-center h-screen justify-center">
         <LuLoader size={24} className="text-[#4b2ec0] animate-spin" />

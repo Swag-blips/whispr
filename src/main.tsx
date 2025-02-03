@@ -12,7 +12,11 @@ const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ClerkProvider publishableKey={publishableKey}>
+    <ClerkProvider
+      signUpForceRedirectUrl={"/auth-callback"}
+      signInForceRedirectUrl={"/auth-callback"}
+      publishableKey={publishableKey}
+    >
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <Toaster />
         <App />
