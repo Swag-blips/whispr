@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import RootLayout from "./layout/RootLayout";
 import SelectChat from "./components/SelectChat";
 import Chat from "./components/Chat";

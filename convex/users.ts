@@ -9,7 +9,6 @@ export const store = mutation({
     if (!identity) {
       throw new Error("Called storeUser without authentication present");
     }
-    
 
     console.log("Called");
 
@@ -99,3 +98,14 @@ export const updateUserStatus = mutation({
     await ctx.db.patch(user._id, { isOnline: args.status });
   },
 });
+
+// const getOnlineUsers = query({
+//   args: {},
+//   handler: async (ctx, args) => {
+//     const identity = await ctx.auth.getUserIdentity();
+
+//     if (!identity) {
+//       throw new Error("Must be authenticated");
+//     }
+//   },
+// });

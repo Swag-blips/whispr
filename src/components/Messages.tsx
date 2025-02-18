@@ -22,7 +22,6 @@ const Messages = () => {
     chatId,
   });
 
-
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const { loading, setLoading } = useChatStore();
@@ -44,11 +43,9 @@ const Messages = () => {
     <>
       <main className="px-6 font-medium relative mt-6">
         <div className="flex flex-col gap-6 justify-center">
-          {!messages?.length ? (
-            <p>Loading....</p>
-          ) : (
-            <>
-              {messages?.map((message) => (
+          <>
+            {messages ? (
+              messages?.map((message) => (
                 <>
                   <div
                     className={`flex items-end gap-6 last:mb-[86px] ${message.senderId === authUser.userId ? "justify-end" : ""}`}
@@ -76,9 +73,11 @@ const Messages = () => {
                     </div>
                   </div>
                 </>
-              ))}
-            </>
-          )}
+              ))
+            ) : (
+              <p>Loading</p>
+            )}
+          </>
         </div>
         <div ref={messagesEndRef} className="end" />
       </main>

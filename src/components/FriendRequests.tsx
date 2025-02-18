@@ -49,13 +49,7 @@ const FriendRequests = () => {
   return (
     <div className="w-full xl:w-[67.2222%] px-4 py-4 flex flex-col">
       <div className="flex items-center justify-center xl:justify-start gap-2">
-        <p className="text-white font-semibold">Friends</p>
-        <div />
-        <p className="text-[#B6B6B6] font-semibold">Online</p>
-        <div />
-        <p className="text-[#B6B6B6] font-semibold">All</p>
-        <div />
-        <p className="text-[#B6B6B6] font-semibold">Pending</p>
+        <p className="text-white font-semibold">Pending</p>
       </div>
       <div className="flex flex-col gap-4 justify-center mt-4 ">
         {friendRequests !== "No friend Requests" &&

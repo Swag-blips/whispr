@@ -99,7 +99,7 @@ const Chats = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <h4 className="text-base font-medium text-left text-[#E2E2E2]">
-                  {user.receiver?.name || user.chat?.groupName }
+                  {user.receiver?.name || user.chat?.groupName}
                 </h4>
                 <p className="text-[#A4A2A2] text-xs">
                   {user.chat?.lastMessage ||

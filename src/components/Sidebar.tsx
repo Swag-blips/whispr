@@ -1,17 +1,14 @@
 import logo from "/assets/logo.svg";
 import { GoHomeFill } from "react-icons/go";
-import { BsChatText } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { IoSettingsOutline } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
 import { UserButton } from "@clerk/clerk-react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import CreateGroup from "./CreateGroup";
-import Overlay from "./Overlay";
 import useGroupStore from "../store/useGroupStore";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [openGroupModal, setOpenGroupModal] = useState(false);
@@ -20,6 +17,7 @@ const Sidebar = () => {
     api.friends.updateLatestFriendRequest
   );
 
+  const navigate = useNavigate();
   const { setIsOpen } = useGroupStore();
 
   const delay = (time: number) => {
@@ -73,6 +71,9 @@ const Sidebar = () => {
     return () => toast.dismiss();
   }, [friendRequests]);
 
+  const handleNavigate = (path: string) => {
+    navigate(`/${path}`);
+  };
   return (
     <aside className="bg-[#12171D]  hidden xl:flex sticky right-0 left-0 top-0 bottom-0 py-6 justify-center w-[8.8888%] h-screen">
       <div className="flex flex-col justify-between items-center">
@@ -82,10 +83,18 @@ const Sidebar = () => {
           </figure>
 
           <div className="flex flex-col items-center gap-8">
-            <GoHomeFill size={30} className="text-white" />
-            <BsChatText size={24} className="text-white" />
-            <CgProfile size={24} className="text-white" />
-            <IoSettingsOutline size={24} className="text-white" />
+            <GoHomeFill
+              onClick={() => handleNavigate("")}
+              size={30}
+              className="text-white"
+            />
+
+            <CgProfile
+              onClick={() => handleNavigate("friendRequests")}
+              size={24}
+              className="text-white"
+            />
+
             <CiCirclePlus
               onClick={setIsOpen}
               size={24}
