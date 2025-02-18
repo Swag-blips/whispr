@@ -16,6 +16,7 @@ const ChatInfo = () => {
 
   const getChatUser = async () => {
     setLoading(true);
+    console.log(loading);
     try {
       if (!chat || !authUser) {
         return;
@@ -37,7 +38,6 @@ const ChatInfo = () => {
   useEffect(() => {
     getChatUser();
   }, [id, chat]);
-
 
   return (
     <div className="sticky h-screen top-0  right-4  bottom-0 flex-col mt-8 ">

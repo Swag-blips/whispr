@@ -6,12 +6,11 @@ import { UserButton } from "@clerk/clerk-react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useGroupStore from "../store/useGroupStore";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const [openGroupModal, setOpenGroupModal] = useState(false);
   const friendRequests = useQuery(api.friends.fetchFriendRequests);
   const updateFriendRequest = useMutation(
     api.friends.updateLatestFriendRequest

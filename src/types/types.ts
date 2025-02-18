@@ -30,7 +30,7 @@ export interface Chat {
   _id: Id<"chats">;
 }
 
-interface Receiver {
+export interface Receiver {
   name: string;
   photoUrl: string;
   tokenIdentifier: string;

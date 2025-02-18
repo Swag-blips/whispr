@@ -30,7 +30,7 @@ export const message = mutation({
 export const getMessages = query({
   args: { chatId: v.id("chats") },
   handler: async (ctx, args) => {
-    const chat = await ctx.db.get(args.chatId);
+
 
     const messages = await ctx.db
       .query("messages")

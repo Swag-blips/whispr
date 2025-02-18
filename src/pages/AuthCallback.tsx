@@ -6,11 +6,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuLoader } from "react-icons/lu";
 
-type Props = {};
-
-const AuthCallback = (props: Props) => {
+const AuthCallback = () => {
   const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = useConvexAuth();
+  const { isAuthenticated } = useConvexAuth();
   const { user } = useUser();
   // When this state is set we know the server
   // has stored the user.
@@ -29,6 +27,7 @@ const AuthCallback = (props: Props) => {
     async function createUser() {
       const id = await storeUser();
       setUserId(id);
+      console.log(userId);
     }
     createUser();
 

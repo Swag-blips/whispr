@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { CiCirclePlus } from "react-icons/ci";
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
@@ -52,13 +52,17 @@ const CreateGroup = () => {
 
           <input
             type="text"
+            onChange={(e) => setGroupName(e.target.value)}
             placeholder="Enter group Name"
             className="bg-[#1E2126] outline-none text-white px-3 py-3 placeholder:text-xs rounded-lg placeholder:font-medium placeholder:text-[#A4A2A2]"
           />
         </div>
         <div className="flex flex-col gap-2 justify-center mt-4">
           {users?.map((user) => (
-            <div className="flex justify-between items-center">
+            <div
+              onClick={() => handleAddUser(user.userId)}
+              className="flex justify-between items-center"
+            >
               <div className="flex items-center gap-2">
                 <img
                   src={user.receiver?.photoUrl}

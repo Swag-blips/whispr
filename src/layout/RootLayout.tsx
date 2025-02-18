@@ -18,7 +18,7 @@ const RootLayout = () => {
   const { isOpen, setIsOpen } = useModalStore();
   const { isLoaded, userId } = useAuth();
   const navigate = useNavigate();
-  const { isOnline } = useNetworkStatus();
+
 
   const { isOpen: isGroupOpen } = useGroupStore();
 

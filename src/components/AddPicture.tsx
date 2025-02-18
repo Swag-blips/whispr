@@ -22,7 +22,6 @@ const AddPicture = ({
   image,
   chatId,
   setSelectedImage,
-  isOpen,
   selectedImage,
   setImage,
   authUserId,
