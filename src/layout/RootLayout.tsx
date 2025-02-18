@@ -1,14 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Chats from "../components/Chats";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useModalStore from "../store/useModalStore";
 import AddUserModal from "../components/AddUserModal";
 import Overlay from "../components/Overlay";
-import { useNetworkStatus } from "../hooks/useNetworkStatus";
 import useGroupStore from "../store/useGroupStore";
 import CreateGroup from "../components/CreateGroup";
 import { useAuth } from "@clerk/clerk-react";
