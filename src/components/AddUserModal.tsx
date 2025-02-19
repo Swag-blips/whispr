@@ -21,7 +21,6 @@ const AddUserModal = () => {
   const handleSearch = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
-
     if (!name) {
       return;
     }
