@@ -1,50 +1,113 @@
-# React + TypeScript + Vite
+# Whispr - Real-time Chat Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Whispr is a modern, real-time chat application built with React, TypeScript, Convex, and Tailwind CSS. It provides a seamless and intuitive messaging experience, allowing users to connect with friends, family, and colleagues effortlessly.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Real-time Messaging:** Experience instant message delivery with Convex's reactive data platform.
+*   **User Authentication:** Secure authentication process using Convex auth.
+*   **Friend System:** Add, accept, and manage friends within the application.
+*   **Group Chats:** Create and participate in group conversations.
+*   **Responsive Design:** Enjoy a consistent user experience across various devices with Tailwind CSS.
+*   **Image Uploads:** Ability to upload and share images in chats.
+*   **Online Status:** See when your friends are online.
+*   **Personalized Avatars:** Customize your profile with a unique avatar.
+*   **Intuitive UI:** Easy-to-use interface for a smooth chatting experience.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Follow these steps to set up Whispr on your local machine:
 
-- Configure the top-level `parserOptions` property like this:
+1.  **Clone the repository:**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+    ```bash
+    git clone <repository-url>
+    cd whispr
+    ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2.  **Install dependencies:**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+    ```bash
+    npm install
+    ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+3.  **Environment Variables:**
+
+    Create a `.env.local` file in the root directory and add the necessary environment variables.  You'll need to get your Convex URL.
+    ```
+    VITE_CONVEX_URL=<your_convex_url>
+    ```
+
+4.  **Convex Setup:**
+
+    *   Install Convex CLI:
+        ```bash
+        npm install -g convex
+        ```
+    *   Initialize Convex:
+        ```bash
+        convex init
+        ```
+    *   Deploy Convex schema:
+        ```bash
+        convex dev
+        ```
+        (This command also starts the development server.)
+
+## Usage
+
+1.  **Start the development server:**
+
+    ```bash
+    npm run dev
+    ```
+
+    This command starts the Vite development server, and you can access the application in your browser at `http://localhost:5173` (or whichever port is specified).
+
+2.  **Sign In/Sign Up:**
+
+    *   Navigate to the application in your browser.
+    *   Use the provided authentication to sign in or create a new account.
+
+3.  **Start Chatting:**
+
+    *   Browse your friends list or search for new friends.
+    *   Start individual or group chats.
+    *   Send and receive real-time messages.
+
+## Database Setup
+
+Whispr uses Convex as its database. The schema is defined in `convex/schema.ts`. The data model includes tables for users, chats, messages, and friendships.
+
+Key Convex files:
+
+*   `convex/schema.ts`: Defines the database schema.
+*   `convex/users.ts`: Contains Convex functions for user-related operations.
+*   `convex/chats.ts`: Contains Convex functions for chat-related operations.
+*   `convex/messages.ts`: Contains Convex functions for message-related operations.
+*   `convex/friends.ts`: Contains Convex functions for friend-related operations.
+*   `convex/auth.config.ts`: Configures authentication.
+*   `convex/upload.ts`: Contains Convex functions for handling file uploads.
+
+When developing locally, Convex provides a dashboard to inspect the database state and run queries.
+
+## Contributing
+
+Contributions are welcome! Here's how you can contribute:
+
+1.  **Fork the repository.**
+2.  **Create a new branch** for your feature or bug fix.
+3.  **Make your changes** and ensure they are well-tested.
+4.  **Submit a pull request** with a clear description of your changes.
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+## Badges
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Contact
+
+If you have any questions or suggestions, feel free to reach out!
