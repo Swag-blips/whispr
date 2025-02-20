@@ -9,6 +9,7 @@ body {
   background-color: #16191c;
 }
 
+/* add the code bellow */
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
