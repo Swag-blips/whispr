@@ -5,15 +5,20 @@ import { api } from "../../convex/_generated/api";
 import { Link, useLocation, useParams } from "react-router-dom";
 import useModalStore from "../store/useModalStore";
 import useUserStore from "../store/useUserStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Id } from "../../convex/_generated/dataModel";
 import useChatStore from "../store/useChatStore";
 import Friends from "./Friends";
 import { FaUserGroup } from "react-icons/fa6";
+import SidebarSkeleton from "../helpers/SidebarSkeleton";
+
 const Chats = () => {
   const { setUser } = useUserStore();
-
+  const [loaders] = useState(new Array(5).fill(5));
   const userChats = useQuery(api.chats.getUserChats);
+  const [loading, setLoading] = useState(true);
+
+  const [availableUserChat, setAvailableUserChat] = useState(true);
   const { setIsOpen } = useModalStore();
 
   const { id } = useParams();
@@ -43,6 +48,16 @@ const Chats = () => {
       setUser(authUser);
     }
   }, [authUser]);
+
+  useEffect(() => {
+    if (userChats) {
+      if (userChats?.length > 0) {
+        setLoading(false);
+      } else {
+        setAvailableUserChat(false);
+      }
+    }
+  }, [userChats]);
 
   const { pathname } = useLocation();
   const isFriendRequest = pathname === "/friendRequests";
@@ -110,7 +125,16 @@ const Chats = () => {
           </div>
         </Link>
       ))}
-      {!userChats?.length && (
+
+      {loading && (
+        <div className="flex flex-col gap-4">
+          {loaders.map((_, index) => (
+            <SidebarSkeleton key={index} />
+          ))}
+        </div>
+      )}
+
+      {!availableUserChat && (
         <div className="flex items-center justify-center h-[50vh] flex-col">
           <div>
             <p className="text-white text-center">Your inbox is empty</p>
