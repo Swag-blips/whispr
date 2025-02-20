@@ -3,7 +3,7 @@ import MessageInput from "./MessageInput";
 import { api } from "../../convex/_generated/api";
 import { useParams } from "react-router-dom";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import useChatStore from "../store/useChatStore";
 import { Id } from "../../convex/_generated/dataModel";
 import useUserStore from "../store/useUserStore";

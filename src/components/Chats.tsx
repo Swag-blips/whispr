@@ -11,6 +11,7 @@ import useChatStore from "../store/useChatStore";
 import Friends from "./Friends";
 import { FaUserGroup } from "react-icons/fa6";
 import SidebarSkeleton from "../helpers/SidebarSkeleton";
+import moment from "moment";
 
 const Chats = () => {
   const { setUser } = useUserStore();
@@ -122,6 +123,10 @@ const Chats = () => {
                 </p>
               </div>
             </div>
+
+            <p className="text-[#A4A2A2] text-xs">
+              {moment(user.chat?.lastMessageTime).format("LT")}
+            </p>
           </div>
         </Link>
       ))}

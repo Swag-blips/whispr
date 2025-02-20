@@ -18,14 +18,14 @@ export default defineSchema({
     chatId: v.id("chats"),
     message: v.optional(v.string()),
     image: v.optional(v.id("_storage")),
-    format: v.string()
+    format: v.string(),
   }).index("by_chatId", ["chatId"]),
 
   userChats: defineTable({
     chatId: v.id("chats"),
     with: v.optional(v.string()),
     userId: v.string(),
-    groupPic: v.optional(v.string())
+    groupPic: v.optional(v.string()),
   }).index("by_userId", ["userId"]),
 
   chats: defineTable({

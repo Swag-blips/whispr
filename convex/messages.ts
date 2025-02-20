@@ -11,11 +11,14 @@ export const message = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
+    const chat = await ctx.db.get(args.chatId);
 
     if (!identity) {
       throw new Error("You need to be authenticated to perform this action");
     }
-
+    if (!chat) {
+      throw new Error("Chat does not exist");
+    }
     await ctx.db.insert("messages", {
       senderId: identity.subject,
       image: args.image,
@@ -24,14 +27,17 @@ export const message = mutation({
       chatId: args.chatId,
       message: args.message,
     });
+
+    await ctx.db.patch(args.chatId, {
+      lastMessage: args.message,
+      lastMessageTime: new Date().getTime(),
+    });
   },
 });
 
 export const getMessages = query({
   args: { chatId: v.id("chats") },
   handler: async (ctx, args) => {
-
-
     const messages = await ctx.db
       .query("messages")
       .withIndex("by_chatId", (q) => q.eq("chatId", args.chatId))
