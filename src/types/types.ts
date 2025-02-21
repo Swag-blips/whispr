@@ -18,15 +18,17 @@ export interface UserChats {
 }
 
 export interface Chat {
-  participant1?: string;
-  type: string,
-  admin?:string,
-  groupName?:string;
-  participants?: Array<string>,
+  type: string;
+
   lastMessage: string;
-  participant2?: string;
-  lastMessageTime: number,
+  lastMessageTime: number;
   _creationTime: number;
+
+  admin?: string | undefined;
+  groupName?: string | undefined;
+  participant1?: string | undefined;
+  participant2?: string | undefined;
+  participants?: string[] | undefined;
   _id: Id<"chats">;
 }
 

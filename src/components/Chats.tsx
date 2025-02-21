@@ -20,6 +20,8 @@ const Chats = () => {
   const [loading, setLoading] = useState(true);
 
   const [availableUserChat, setAvailableUserChat] = useState(true);
+  const [friendLoaders] = useState(new Array(8).fill(8));
+  const [availableFriends, setAvailableFriends] = useState(false);
   const { setIsOpen } = useModalStore();
 
   const { id } = useParams();
@@ -60,6 +62,20 @@ const Chats = () => {
     }
   }, [userChats]);
 
+  useEffect(() => {
+    if (userChats) {
+      if (
+        userChats?.filter((users) => users.receiver?.isOnline === true).length >
+        0
+      ) {
+        setAvailableFriends(true);
+      } else {
+        setAvailableFriends(false);
+      }
+    }
+    setLoading(false);
+  }, [availableFriends]);
+
   const { pathname } = useLocation();
   const isFriendRequest = pathname === "/friendRequests";
 
@@ -72,7 +88,14 @@ const Chats = () => {
         <FiPlusCircle onClick={handleOpen} size={24} color="#ffffff" />
       </div>
 
-      <Friends />
+      {availableFriends && (
+        <Friends
+          friendLoaders={friendLoaders}
+          loading={loading}
+          availableFriends={availableFriends}
+        />
+      )}
+
       <form className="mt-2">
         <div className="relative">
           <input

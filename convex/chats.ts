@@ -10,7 +10,6 @@ export const getChat = mutation({
   },
 });
 
-
 export const getChatUser = mutation({
   args: { userId: v.optional(v.string()) },
   handler: async (ctx, args) => {
@@ -43,7 +42,7 @@ export const createUserChats = mutation({
       participant1: identity.subject,
       participant2: args.toBeAddedId,
       lastMessage: "",
-      lastMessageTime: Date.now()
+      lastMessageTime: Date.now(),
     });
 
     await ctx.db.insert("userChats", {
@@ -84,7 +83,7 @@ export const getUserChats = query({
           .withIndex("by_userId", (q) => q.eq("userId", user.with!))
           .unique();
 
-        const chat = await ctx.db.get(user.chatId)
+        const chat = await ctx.db.get(user.chatId);
 
         return {
           ...user,
@@ -96,9 +95,8 @@ export const getUserChats = query({
   },
 });
 
-
 export const createGroupChat = mutation({
-  args:{participants: v.array(v.string()), groupName: v.string()},
+  args: { participants: v.array(v.string()), groupName: v.string() },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
@@ -106,22 +104,24 @@ export const createGroupChat = mutation({
       throw new Error("Must be authenticated");
     }
 
-    const combinedParticipants = [...args.participants, identity.subject]
+    const combinedParticipants = [...args.participants, identity.subject];
     const chat = await ctx.db.insert("chats", {
       admin: identity.subject,
       type: "Group",
       participants: combinedParticipants,
       lastMessage: "",
       groupName: args.groupName,
-      lastMessageTime: Date.now()
-    })
+      lastMessageTime: Date.now(),
+    });
 
-   Promise.all(combinedParticipants.map(async participant => {
-    await ctx.db.insert("userChats", {
-      userId: participant,
-      chatId: chat,
-      groupPic: "",
-    })
-  }))
-  }
-})
+    Promise.all(
+      combinedParticipants.map(async (participant) => {
+        await ctx.db.insert("userChats", {
+          userId: participant,
+          chatId: chat,
+          groupPic: "",
+        });
+      })
+    );
+  },
+});
