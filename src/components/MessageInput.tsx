@@ -95,7 +95,7 @@ const MessageInput = () => {
           <MdMic size={24} color="#ffffff" className="absolute top-4 left-2" />
         </div>
 
-        <div className=" bg-[#1E2126] gap-4 h-14 right-2 pr-4 flex items-center justify-center">
+        <div className=" bg-[#1E2126]  gap-4 h-14 right-2 pr-4 flex items-center justify-center">
           <input
             type="file"
             hidden

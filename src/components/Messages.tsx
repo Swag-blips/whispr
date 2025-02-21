@@ -2,12 +2,11 @@ import { useQuery } from "convex/react";
 import MessageInput from "./MessageInput";
 import { api } from "../../convex/_generated/api";
 import { useParams } from "react-router-dom";
-
 import { useEffect, useRef } from "react";
 import useChatStore from "../store/useChatStore";
 import { Id } from "../../convex/_generated/dataModel";
 import useUserStore from "../store/useUserStore";
-import Spinner from "../helpers/Spinner";
+import MessagesSkeleton from "../helpers/MessagesSkeleton";
 
 export interface Params {
   id: Id<"chats">;
@@ -45,7 +44,7 @@ const Messages = () => {
       <main className="px-6 font-medium relative mt-6">
         <div className="flex flex-col gap-6 justify-center">
           <>
-            {messages ? (
+            {messages &&
               messages?.map((message) => (
                 <>
                   <div
@@ -74,13 +73,10 @@ const Messages = () => {
                     </div>
                   </div>
                 </>
-              ))
-            ) : (
-              <div className="flex items-center justify-center h-screen">
-                <Spinner />
-              </div>
-            )}
+              ))}
           </>
+
+          {loading && <MessagesSkeleton />}
         </div>
         <div ref={messagesEndRef} className="end" />
       </main>
